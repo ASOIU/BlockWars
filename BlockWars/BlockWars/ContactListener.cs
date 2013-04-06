@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Box2D.XNA;
 
-namespace WindowsGame2
+namespace BlockWars
 {
     class ContactListener : IContactListener
     {

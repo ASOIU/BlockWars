@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace WindowsGame2.UI
+namespace BlockWars.UI
 {
     class Background : UIControl
     {
