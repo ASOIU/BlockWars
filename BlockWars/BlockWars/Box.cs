@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Box2D.XNA;
+﻿using Box2D.XNA;
 using Microsoft.Xna.Framework;
 
 namespace BlockWars

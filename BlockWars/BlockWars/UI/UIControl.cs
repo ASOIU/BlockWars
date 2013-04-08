@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BlockWars.UI
@@ -14,6 +10,8 @@ namespace BlockWars.UI
         public bool Visible { get; set; }
 
         public bool Enable { get; set; }
+
+        public bool IsActive { get; protected set; }
 
         protected SpriteBatch mSpriteBatch;
 

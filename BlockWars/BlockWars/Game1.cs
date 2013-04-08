@@ -1,7 +1,6 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
-using BlockWars.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -10,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Box2D.XNA;
+using BlockWars.UI;
 
 namespace BlockWars
 {
@@ -69,7 +69,7 @@ namespace BlockWars
             mBuilder = new Builder(mWorld, mCamera, Content);
             mBuilder.Activate();
 
-            mUiManager = new UIManager(spriteBatch, Content);
+            mUiManager = new UIManager(spriteBatch, Content, mBuilder);
 
             base.Initialize();
         }
@@ -80,9 +80,9 @@ namespace BlockWars
             float cx = x - bw * n / 2f + bw / 2f,
                   cy = y + bh / 2f;
             Vector2 size = new Vector2(bw, bh);
-            for (int i = 0; i < n; i++)//По высоте
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < n - i; j++)//По ширине
+                for (int j = 0; j < n - i; j++)
                 {
                     Vector2 pos = new Vector2(cx + j * bw, cy + i * bh);
                     Box box = new Box(mWorld, pos, size, Color.Red, true);
