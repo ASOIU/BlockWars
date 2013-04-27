@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BlockWars.UI
+namespace WindowsGame2.UI
 {
     class Switcher:UIControl
     {
@@ -11,11 +14,13 @@ namespace BlockWars.UI
 
         public bool IsSwitchedOn { get; set; }
 
+        //public bool IsActive { get; private set; }
+
         private Texture2D mSwitchedOnTexture;
         private Texture2D mSwitchedOffTexture;
         private Texture2D mActiveTexture;
 
-        private Vector2 mSize;
+        public Vector2 mSize;
 
         private MouseState mPrevMouseState;
 
@@ -23,6 +28,7 @@ namespace BlockWars.UI
             Texture2D switchedOnTexture,
             Texture2D switchedOffTexture, 
             Texture2D activeTexture)
+
             : base(spriteBatch)
         {
             IsSwitchedOn = false;
@@ -55,11 +61,12 @@ namespace BlockWars.UI
                 curMouseState.LeftButton == ButtonState.Pressed &&
                 mPrevMouseState.LeftButton == ButtonState.Released)
             {
-                IsSwitchedOn=!IsSwitchedOn;
+                IsSwitchedOn = !IsSwitchedOn;
                 OnClick();
             }
-            
+
             mPrevMouseState = curMouseState;
+
         }
 
         public override void Draw()
@@ -87,6 +94,8 @@ namespace BlockWars.UI
                 Click(this, EventArgs.Empty);
 
             }
+
         }
+ 
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
 
-namespace BlockWars
+namespace WindowsGame2
 {
     class Bullet
     {

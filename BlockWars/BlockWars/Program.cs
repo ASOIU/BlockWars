@@ -1,6 +1,6 @@
 using System;
 
-namespace BlockWars
+namespace WindowsGame2
 {
 #if WINDOWS || XBOX
     static class Program

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BlockWars
+namespace WindowsGame2
 {
     class Camera
     {
@@ -52,8 +52,8 @@ namespace BlockWars
         public void Update(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
-            if (mouseState.MiddleButton == ButtonState.Pressed &&
-                mPrevMouseState.MiddleButton == ButtonState.Pressed)
+            if (mouseState.RightButton == ButtonState.Pressed &&
+                mPrevMouseState.RightButton == ButtonState.Pressed)
             {
                 mPosition.X -= mouseState.X - mPrevMouseState.X;
                 mPosition.Y += mouseState.Y - mPrevMouseState.Y;

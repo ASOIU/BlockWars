@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BlockWars
+namespace WindowsGame2
 {
     class Builder
     {
@@ -20,9 +20,7 @@ namespace BlockWars
 
         private ButtonState mLastButtonState;
 
-        private int mBoxLast;
-
-        private SpriteFont mFont;
+        public int mBoxLast;
 
         private Camera mCamera;
 
@@ -30,7 +28,6 @@ namespace BlockWars
         {
             mWorld = world;
             mIsActive = false;
-            mFont = contentManager.Load<SpriteFont>("Font");
             mCamera = camera;
         }
 
@@ -43,6 +40,11 @@ namespace BlockWars
                 CreateBox();
             }
         }
+
+        enum ChooseBlock
+        {
+            light, normal, hard
+        };
 
         private void CreateBox()
         {
@@ -104,9 +106,6 @@ namespace BlockWars
             if (mIsActive)
             {
                 mBuildingBox.Draw(primitiveRender);
-                string boxLastText = "Box Last: " + mBoxLast;
-                Vector2 pos = new Vector2(0, 0);
-                spriteBatch.DrawString(mFont, boxLastText, pos, Color.Black);
             }
         }
     }

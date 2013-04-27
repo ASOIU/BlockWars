@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Box2D.XNA;
-using BlockWars.UI;
+using WindowsGame2.UI;
 
-namespace BlockWars
+namespace WindowsGame2
 {
     public class Game1 : Game
     {
@@ -80,9 +80,9 @@ namespace BlockWars
             float cx = x - bw * n / 2f + bw / 2f,
                   cy = y + bh / 2f;
             Vector2 size = new Vector2(bw, bh);
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)//�� ������
             {
-                for (int j = 0; j < n - i; j++)
+                for (int j = 0; j < n - i; j++)//�� ������
                 {
                     Vector2 pos = new Vector2(cx + j * bw, cy + i * bh);
                     Box box = new Box(mWorld, pos, size, Color.Red, true);

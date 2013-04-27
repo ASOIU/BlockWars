@@ -1,7 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BlockWars.UI
+namespace WindowsGame2.UI
 {
     class Background : UIControl
     {
@@ -22,9 +26,7 @@ namespace BlockWars.UI
         {
             if (Visible)
             {
-                Vector2 scale = new Vector2(800 / 1920f, 480 / 1080f);
-                mSpriteBatch.Draw(mTexture, Position, null, Color.White,
-                    0f, Vector2.Zero, scale, SpriteEffects.None, 1);
+                mSpriteBatch.Draw(mTexture, Position, Color.White);
             }
         }
     }

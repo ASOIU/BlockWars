@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
 
-namespace BlockWars
+namespace WindowsGame2
 {
     static class BoxDestroyer
     {

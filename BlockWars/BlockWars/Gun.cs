@@ -6,7 +6,7 @@ using Box2D.XNA;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace BlockWars
+namespace WindowsGame2
 {
     class Gun
     {
