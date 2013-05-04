@@ -110,18 +110,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AGameObject.cs" />
+    <Compile Include="EBlockType.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="BoxDestroyer.cs" />
     <Compile Include="Builder.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="ContactListener.cs" />
+    <Compile Include="EObjectType.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="PrimitiveRender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="UI\Background.cs" />
+    <Compile Include="UI\Cursor.cs" />
     <Compile Include="UI\Switcher.cs" />
     <Compile Include="UI\UIControl.cs" />
     <Compile Include="UI\UIManager.cs" />

@@ -5,9 +5,9 @@ using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
 
-namespace WindowsGame2
+namespace BlockWars
 {
-    class Box
+    class Box:AGameObject
     {
         public Vector2 mSize;
 
@@ -23,6 +23,7 @@ namespace WindowsGame2
 
         public Box(World world, Vector2 position, Vector2 size, Color color, bool isStatic)
         {
+            ObjectType = EObjectType.Box;
             mHealth = 100;
             mIsDestroyed = false;
             mSize = size;
@@ -55,6 +56,16 @@ namespace WindowsGame2
             MassData data = new MassData();
             data.mass = 0.01f;
             mBody.SetUserData(this);
+        }
+
+        public override Vector2 GetPosition()
+        {
+            return mBody.Position;
+        }
+
+        public override void SetPosition(Vector2 position)
+        {
+            mBody.Position = position;
         }
 
         public void Draw(PrimitiveRender primitiveRender)

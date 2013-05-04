@@ -5,7 +5,7 @@ using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
 
-namespace WindowsGame2
+namespace BlockWars
 {
     static class BoxDestroyer
     {

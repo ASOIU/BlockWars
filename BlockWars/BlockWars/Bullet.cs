@@ -5,9 +5,9 @@ using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
 
-namespace WindowsGame2
+namespace BlockWars
 {
-    class Bullet
+    class Bullet:AGameObject
     {
         private Box mBox;
 
@@ -26,6 +26,7 @@ namespace WindowsGame2
 
         public Bullet(World world, Vector2 position, float damageRadius, float maxDamageValue)
         {
+            ObjectType = EObjectType.Bullet;
             mDamageRadius = damageRadius;
             mMaxDamageValue = maxDamageValue;
             Vector2 size = new Vector2(1, 1);
@@ -36,6 +37,16 @@ namespace WindowsGame2
             mIsActive = false;
             mIsDestoyed = false;
             Body.SetUserData(this);
+        }
+
+        public override Vector2 GetPosition()
+        {
+            return Body.Position;
+        }
+
+        public override void SetPosition(Vector2 position)
+        {
+            Body.Position = position;
         }
 
         public void Draw(PrimitiveRender primitiveRender)

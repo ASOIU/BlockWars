@@ -6,9 +6,9 @@ using Box2D.XNA;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace WindowsGame2
+namespace BlockWars
 {
-    class Gun
+    class Gun:AGameObject
     {
         private Vector2 mPosition;
 
@@ -22,6 +22,7 @@ namespace WindowsGame2
 
         public Gun(World world, Vector2 position)
         {
+            ObjectType = EObjectType.Gun;
             mPosition = position;
             mWorld = world;
 
@@ -37,6 +38,17 @@ namespace WindowsGame2
             fixture.SetFilterData(ref filter);
             fixture = mBaseBox.mBody.GetFixtureList();
             fixture.SetFilterData(ref filter);
+        }
+
+        public override Vector2 GetPosition()
+        {
+            return mBaseBox.mBody.Position;
+        }
+
+        public override void SetPosition(Vector2 position)
+        {
+            mBaseBox.mBody.Position = position;
+            mBarrelBox.mBody.Position = position;
         }
 
         public void Draw(PrimitiveRender primitiveRender)

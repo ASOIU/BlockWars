@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace WindowsGame2
+namespace BlockWars
 {
     class Builder
     {
@@ -31,6 +31,11 @@ namespace WindowsGame2
             mCamera = camera;
         }
 
+        public void BuildingBlock(EBlockType blockType)
+        {
+
+        }
+
         public void Activate()
         {
             if (!mIsActive)
@@ -40,11 +45,6 @@ namespace WindowsGame2
                 CreateBox();
             }
         }
-
-        enum ChooseBlock
-        {
-            light, normal, hard
-        };
 
         private void CreateBox()
         {
