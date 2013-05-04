@@ -18,6 +18,7 @@ namespace BlockWars.UI
         private Cursor mCursor;
         private SpriteBatch mSpriteBatch;
         private SpriteFont mFont;
+        private bool mBuildMode;
 
         public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder)
         {
@@ -27,6 +28,8 @@ namespace BlockWars.UI
             mControls = new List<UIControl>();
             mButtons = new List<Switcher>();
             mTabs = new List<Switcher>();
+
+
             Texture2D texture = contentManager.Load<Texture2D>("Textures\\UI\\container");
             Background background = new Background(texture, spriteBatch);
             background.Position = new Vector2(0, 360);
@@ -36,10 +39,12 @@ namespace BlockWars.UI
             texture = contentManager.Load<Texture2D>("textures\\UI\\build_switched_on");
             texture2 = contentManager.Load<Texture2D>("textures\\UI\\build_switched_off");
             texture3 = contentManager.Load<Texture2D>("textures\\UI\\build_active");
-            Switcher switcher = new Switcher(spriteBatch,texture,texture2,texture3);
-            switcher.Position = new Vector2(745, 20);
-            switcher.Click += switcher_Click;
-            mControls.Add(switcher);
+            Switcher BButton = new Switcher(spriteBatch, texture, texture2, texture3);
+            BButton.Position = new Vector2(745, 20);
+            BButton.Click += switcher_Click;
+            BButton.BuildClick += BButton_BuildClick;
+            mControls.Add(BButton);
+            mButtons.Add(BButton);
 
             texture = contentManager.Load<Texture2D>("textures\\UI\\building_switched_on");
             texture2 = contentManager.Load<Texture2D>("textures\\UI\\building_switched_off");
@@ -101,6 +106,23 @@ namespace BlockWars.UI
             cursor.Visible = false;
             mControls.Add(cursor);
 
+        }
+
+        void BButton_BuildClick(object sender, EventArgs e)
+        {
+            Switcher BButton = (Switcher)sender;
+            for (int i = 0; i < mControls.Count; i++)
+            {
+                if (mControls[i] != BButton)
+                {
+                    if (mControls[i].Visible)
+                    {
+                        mControls[i].Visible = false;
+                    }
+                    else
+                        mControls[i].Visible = true;
+                }
+            }
         }
 
         void switcher_Click(object sender, EventArgs e)

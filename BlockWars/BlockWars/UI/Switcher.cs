@@ -11,6 +11,7 @@ namespace BlockWars.UI
     class Switcher:UIControl
     {
         public event EventHandler Click;
+        public event EventHandler BuildClick;
 
         public bool IsSwitchedOn { get; set; }
 
@@ -84,7 +85,8 @@ namespace BlockWars.UI
             {
                 texture = mSwitchedOffTexture;
             }
-            mSpriteBatch.Draw(texture, Position, Color.White);
+            if(Visible)
+                mSpriteBatch.Draw(texture, Position, Color.White);
         }
 
         private void OnClick()
@@ -93,6 +95,10 @@ namespace BlockWars.UI
             {
                 Click(this, EventArgs.Empty);
 
+            }
+            if(BuildClick!=null)
+            {
+                BuildClick(this, EventArgs.Empty);
             }
 
         }
