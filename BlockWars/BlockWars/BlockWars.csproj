@@ -117,6 +117,7 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="ContactListener.cs" />
+    <Compile Include="EBlockType.cs" />
     <Compile Include="EObjectType.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="PrimitiveRender.cs" />
