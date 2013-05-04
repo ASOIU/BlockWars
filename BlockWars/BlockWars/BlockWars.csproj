@@ -111,7 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AGameObject.cs" />
-    <Compile Include="EBlockType.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="BoxDestroyer.cs" />
     <Compile Include="Builder.cs" />
