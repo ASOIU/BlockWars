@@ -1,2 +1,9 @@
 _ReSharper.WindowsGame2
 /BlockWars/BlockWarsContent/*.user
+/BlockWars/BlockWars/bin/x86/Debug
+/BlockWars/BlockWars/obj/x86/Debug
+/BlockWars/BlockWarsContent/obj/x86/Debug
+/BlockWars/BlockWars/*.cachefile
+/BlockWars/BlockWars/*.user
+/BlockWars/BlockWarsContent/textures/*.db
+/_ReSharper.BlockWars
