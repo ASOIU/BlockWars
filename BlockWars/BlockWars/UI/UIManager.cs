@@ -41,8 +41,8 @@ namespace BlockWars.UI
             texture3 = contentManager.Load<Texture2D>("textures\\UI\\build_active");
             Switcher BButton = new Switcher(spriteBatch, texture, texture2, texture3);
             BButton.Position = new Vector2(745, 20);
-            BButton.Click += switcher_Click;
-            BButton.BuildClick += BButton_BuildClick;
+            BButton.IsSwitchedOn = true;
+            BButton.Click += BButton_BuildClick;
             mControls.Add(BButton);
             mButtons.Add(BButton);
 
@@ -52,6 +52,7 @@ namespace BlockWars.UI
             Switcher tab = new Switcher(spriteBatch, texture, texture2, texture3);
             tab.Position = new Vector2(5, 365);
             tab.Click += switcher_Click;
+            tab.IsSwitchedOn = true;
             mControls.Add(tab);
             mTabs.Add(tab);
 
@@ -79,6 +80,7 @@ namespace BlockWars.UI
             Switcher block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(10, 390);
             block.Click += switcher_Click;
+            block.IsSwitchedOn = true;
             mControls.Add(block);
             mButtons.Add(block);
 
@@ -113,14 +115,10 @@ namespace BlockWars.UI
             Switcher BButton = (Switcher)sender;
             for (int i = 0; i < mControls.Count; i++)
             {
+                bool isUiVisible = BButton.IsSwitchedOn;
                 if (mControls[i] != BButton)
                 {
-                    if (mControls[i].Visible)
-                    {
-                        mControls[i].Visible = false;
-                    }
-                    else
-                        mControls[i].Visible = true;
+                    mControls[i].Visible = isUiVisible;
                 }
             }
         }
