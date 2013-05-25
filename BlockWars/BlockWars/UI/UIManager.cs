@@ -107,6 +107,8 @@ namespace BlockWars.UI
             cursor.Visible = false;
             mControls.Add(cursor);
 
+            mBuildMode = true;
+
         }
 
         void BButton_BuildClick(object sender, EventArgs e)
@@ -118,6 +120,7 @@ namespace BlockWars.UI
                 if (mControls[i] != BButton)
                 {
                     mControls[i].Visible = isUiVisible;
+                    mBuildMode = isUiVisible;
                 }
             }
         }
@@ -156,7 +159,6 @@ namespace BlockWars.UI
             {
                 tab.IsSwitchedOn = true;
             }
-            Console.WriteLine("Block Click!");
         }
 
         public void Update(GameTime gameTime)
@@ -166,31 +168,50 @@ namespace BlockWars.UI
             {
                 mControls[i].Update(gameTime);
             }
-            for (int i = 0; i < mControls.Count; i++)
+
+            if (!mBuildMode)
             {
-                if (mControls[i].IsActive == true)
+                for (int i = 0; i < mControls.Count; i++)
                 {
-                    for (int j = 0; j < mControls.Count; j++)
+                    if (mControls[i] == mCursor)
                     {
-                        if (mControls[j] == mCursor)
-                        {
-                            mCursor.Visible = true;
-                            mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
-                        }
+                        mCursor.Visible = true;
+                        mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
                     }
-                    mBuilder.Deactivate();
-                    break;
                 }
-                else
+            }
+            else
+            {
+                for (int i = 0; i < mControls.Count; i++)
                 {
-                    for (int j = 0; j < mControls.Count; j++)
+                    if (mControls[i].IsActive == true)
                     {
-                        if (mControls[j] == mCursor)
+                        for (int j = 0; j < mControls.Count; j++)
                         {
-                            mCursor.Visible = false;
+                            if (mControls[j] == mCursor)
+                            {
+                                mCursor.Visible = true;
+                                mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
+                            }
+                        }
+                        mBuilder.Deactivate();
+                        break;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < mControls.Count; j++)
+                        {
+                            if (mControls[j] == mCursor)
+                            {
+                                mCursor.Visible = false;
+                            }
+                        }
+                        if (mBuildMode == true)
+                        {
+                            mBuilder.Activate();
                         }
                     }
-                    mBuilder.Activate();
+
                 }
             }
         }

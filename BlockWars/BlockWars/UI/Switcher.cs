@@ -51,7 +51,10 @@ namespace BlockWars.UI
                 curMouseState.Y >= Position.Y &&
                 curMouseState.Y <= Position.Y + mSize.Y)
             {
-                IsActive = true;
+                if (Visible)
+                {
+                    IsActive = true;
+                }
             }
             else
             {
