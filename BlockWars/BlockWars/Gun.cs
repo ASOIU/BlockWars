@@ -27,10 +27,10 @@ namespace BlockWars
             mWorld = world;
 
             Vector2 size = new Vector2(14, 8);
-            mBaseBox = new Box(world, position, size, Color.Blue, true);
+            mBaseBox = new Box(world, position, size, "gun", true);
 
             size = new Vector2(20, 2);
-            mBarrelBox = new Box(world, position, size, Color.Blue, true);
+            mBarrelBox = new Box(world, position, size, "barrel", true);
 
             Filter filter = new Filter();
             filter.maskBits = 0;

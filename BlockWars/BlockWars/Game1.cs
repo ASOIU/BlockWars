@@ -60,13 +60,13 @@ namespace BlockWars
 
             pos = new Vector2(0, -20);
             size = new Vector2(10000, 1);
-            Box groundBox = new Box(mWorld, pos, size, Color.Green, true);
+            Box groundBox = new Box(mWorld, pos, size, "block", true);
             mImmortalBoxes.Add(groundBox);
 
             pos = new Vector2(-20, -15);
             mGun = new Gun(mWorld, pos);
 
-            mBuilder = new Builder(mWorld, mCamera, Content);
+            mBuilder = new Builder(mWorld, mCamera);
             mBuilder.Activate();
 
             mUiManager = new UIManager(spriteBatch, Content, mBuilder);
@@ -80,12 +80,12 @@ namespace BlockWars
             float cx = x - bw * n / 2f + bw / 2f,
                   cy = y + bh / 2f;
             Vector2 size = new Vector2(bw, bh);
-            for (int i = 0; i < n; i++)//�� ������
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < n - i; j++)//�� ������
+                for (int j = 0; j < n - i; j++)
                 {
                     Vector2 pos = new Vector2(cx + j * bw, cy + i * bh);
-                    Box box = new Box(mWorld, pos, size, Color.Red, true);
+                    Box box = new Box(mWorld, pos, size, "block", true);
                     MassData massData = new MassData();
                     massData.mass = 10;
                     box.mBody.SetMassData(ref massData);

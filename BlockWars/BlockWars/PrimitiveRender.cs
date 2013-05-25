@@ -39,6 +39,16 @@ namespace BlockWars
             mTextures = new Dictionary<string, Texture2D>();
             Texture2D texture = contentManager.Load<Texture2D>("textures\\block3");
             mTextures.Add("block", texture);
+            texture = contentManager.Load<Texture2D>("textures\\block7");
+            mTextures.Add("block2", texture);
+            texture = contentManager.Load<Texture2D>("textures\\block8");
+            mTextures.Add("block3", texture);
+            texture = contentManager.Load<Texture2D>("textures\\gun");
+            mTextures.Add("gun", texture);
+            texture = contentManager.Load<Texture2D>("textures\\barrel");
+            mTextures.Add("barrel", texture);
+            texture = contentManager.Load<Texture2D>("textures\\bullet");
+            mTextures.Add("bullet", texture);
         }
 
         public void DrawSprite(Transform transform, float width, float height, string spriteName)

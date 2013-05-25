@@ -11,8 +11,6 @@ namespace BlockWars
     {
         public Vector2 mSize;
 
-        private Color mColor;
-
         public Body mBody;
 
         private bool mIsDestroyed;
@@ -21,15 +19,16 @@ namespace BlockWars
 
         public float mHealth;
 
-        public Box(World world, Vector2 position, Vector2 size, Color color, bool isStatic)
+        private string mTexture;
+
+        public Box(World world, Vector2 position, Vector2 size, string texture, bool isStatic, float health = 100)
         {
             ObjectType = EObjectType.Box;
-            mHealth = 100;
+            mHealth = health;
             mIsDestroyed = false;
             mSize = size;
-            mColor = color;
             mWorld = world;
-
+            mTexture = texture;
             PolygonShape polygonShape = new PolygonShape();
             polygonShape.SetAsBox(size.X / 2f, size.Y / 2f);
 
@@ -75,7 +74,7 @@ namespace BlockWars
                 Transform transform;
                 mBody.GetTransform(out transform);
                 //primitiveRender.DrawRectangle(transform, mSize.X, mSize.Y, mColor);
-                primitiveRender.DrawSprite(transform, mSize.X, mSize.Y, "block");
+                primitiveRender.DrawSprite(transform, mSize.X, mSize.Y, mTexture);
             }
         }
 

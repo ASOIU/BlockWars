@@ -44,7 +44,6 @@ namespace BlockWars.UI
             BButton.IsSwitchedOn = true;
             BButton.Click += BButton_BuildClick;
             mControls.Add(BButton);
-            mButtons.Add(BButton);
 
             texture = contentManager.Load<Texture2D>("textures\\UI\\building_switched_on");
             texture2 = contentManager.Load<Texture2D>("textures\\UI\\building_switched_off");
@@ -75,7 +74,7 @@ namespace BlockWars.UI
             mTabs.Add(tab);
 
             texture = contentManager.Load<Texture2D>("textures\\UI\\box_switched_on");
-            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box_switched_off");
+            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box3_switched_off");
             texture3 = contentManager.Load<Texture2D>("textures\\UI\\box_active");
             Switcher block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(10, 390);
@@ -85,7 +84,7 @@ namespace BlockWars.UI
             mButtons.Add(block);
 
             texture = contentManager.Load<Texture2D>("textures\\UI\\box_switched_on");
-            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box_switched_off");
+            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box2_switched_off");
             texture3 = contentManager.Load<Texture2D>("textures\\UI\\box_active");
             block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(95, 390);
@@ -94,7 +93,7 @@ namespace BlockWars.UI
             mButtons.Add(block);
 
             texture = contentManager.Load<Texture2D>("textures\\UI\\box_switched_on");
-            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box_switched_off");
+            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box4_switched_off");
             texture3 = contentManager.Load<Texture2D>("textures\\UI\\box_active");
             block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(180, 390);
@@ -134,6 +133,7 @@ namespace BlockWars.UI
                     if (mButtons[i] != block)
                     {
                         mButtons[i].IsSwitchedOn = false;
+                        mBuilder.BuildingBlock((EBlockType)mButtons.IndexOf(block));
                     }
                 }
             }

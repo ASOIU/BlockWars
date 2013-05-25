@@ -24,16 +24,43 @@ namespace BlockWars
 
         private Camera mCamera;
 
-        public Builder(World world, Camera camera, ContentManager contentManager)
+        private string mTexture;
+
+        private float mHealth;
+
+        public Builder(World world, Camera camera)
         {
             mWorld = world;
             mIsActive = false;
             mCamera = camera;
+            mTexture = "block2";
         }
 
         public void BuildingBlock(EBlockType blockType)
         {
-
+            switch (blockType)
+            {
+                case EBlockType.Light:
+                    {
+                        mTexture = "block2";
+                        mHealth = 100;
+                        break;
+                    }
+                case EBlockType.Normal:
+                    {
+                        mTexture = "block";
+                        mHealth = 200;
+                        break;
+                    }
+                case EBlockType.Hard:
+                    {
+                        mTexture = "block3";
+                        mHealth = 300;
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
 
         public void Activate()
@@ -51,7 +78,7 @@ namespace BlockWars
             Vector2 size = new Vector2(6, 3);
             MouseState mouseState = Mouse.GetState();
             Vector2 position = new Vector2(mouseState.X, mouseState.Y);
-            mBuildingBox = new Box(mWorld, position, size, Color.Green, true);
+            mBuildingBox = new Box(mWorld, position, size, mTexture, true, mHealth);
         }
 
         public void Deactivate()

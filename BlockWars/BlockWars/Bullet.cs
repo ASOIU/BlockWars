@@ -30,7 +30,7 @@ namespace BlockWars
             mDamageRadius = damageRadius;
             mMaxDamageValue = maxDamageValue;
             Vector2 size = new Vector2(1, 1);
-            mBox = new Box(world, position, size, Color.Red, true);
+            mBox = new Box(world, position, size, "bullet", true);
             MassData massData = new MassData();
             massData.mass = 1000;
             mBox.mBody.SetMassData(ref massData);
