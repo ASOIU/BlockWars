@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace BlockWars
 {
-    class Box:AGameObject
+    class Box : AGameObject
     {
         public Vector2 mSize;
 
@@ -18,6 +18,11 @@ namespace BlockWars
         private World mWorld;
 
         public float mHealth;
+
+        public string Texture
+        {
+            get { return mTexture; }
+        }
 
         private string mTexture;
 
@@ -56,6 +61,7 @@ namespace BlockWars
             data.mass = 0.01f;
             mBody.SetUserData(this);
         }
+
 
         public override Vector2 GetPosition()
         {

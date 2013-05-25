@@ -25,22 +25,22 @@ namespace BlockWars
             Vector2 force = new Vector2(1.1f / explosionDistance);
 
             Vector2 partBoxPos = pos - partBoxSize / 2;
-            Box partBox = new Box(world, partBoxPos, partBoxSize, "block", false);
+            Box partBox = new Box(world, partBoxPos, partBoxSize, box.Texture, false);
             partBox.mBody.ApplyLinearImpulse(force * partBox.mBody.GetMass(), Vector2.Zero);
             boxes.Add(partBox);
 
             partBoxPos = pos + partBoxSize / 2;
-            partBox = new Box(world, partBoxPos, partBoxSize, "block", false);
+            partBox = new Box(world, partBoxPos, partBoxSize, box.Texture, false);
             partBox.mBody.ApplyLinearImpulse(force * partBox.mBody.GetMass(), Vector2.Zero);
             boxes.Add(partBox);
 
             partBoxPos = new Vector2(pos.X + partBoxSize.X / 2, pos.Y - partBoxSize.Y / 2);
-            partBox = new Box(world, partBoxPos, partBoxSize, "block", false);
+            partBox = new Box(world, partBoxPos, partBoxSize, box.Texture, false);
             partBox.mBody.ApplyLinearImpulse(force * partBox.mBody.GetMass(), Vector2.Zero);
             boxes.Add(partBox);
 
             partBoxPos = new Vector2(pos.X - partBoxSize.X / 2, pos.Y + partBoxSize.Y / 2);
-            partBox = new Box(world, partBoxPos, partBoxSize, "block", false);
+            partBox = new Box(world, partBoxPos, partBoxSize, box.Texture, false);
             partBox.mBody.ApplyLinearImpulse(force * partBox.mBody.GetMass(), Vector2.Zero);
             boxes.Add(partBox);
             return boxes;
