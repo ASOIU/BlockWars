@@ -69,7 +69,7 @@ namespace BlockWars
             mBuilder = new Builder(mWorld, mCamera);
             mBuilder.Activate();
 
-            mUiManager = new UIManager(spriteBatch, Content, mBuilder);
+            mUiManager = new UIManager(spriteBatch, Content, mBuilder, mGun);
 
             base.Initialize();
         }

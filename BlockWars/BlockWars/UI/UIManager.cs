@@ -19,8 +19,9 @@ namespace BlockWars.UI
         private SpriteBatch mSpriteBatch;
         private SpriteFont mFont;
         private bool mBuildMode;
+        private Gun mGun;
 
-        public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder)
+        public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder, Gun gun)
         {
             mFont = contentManager.Load<SpriteFont>("Font");
             mSpriteBatch = spriteBatch;
@@ -28,7 +29,6 @@ namespace BlockWars.UI
             mControls = new List<UIControl>();
             mButtons = new List<Switcher>();
             mTabs = new List<Switcher>();
-
 
             Texture2D texture = contentManager.Load<Texture2D>("Textures\\UI\\container");
             Background background = new Background(texture, spriteBatch);
@@ -108,7 +108,7 @@ namespace BlockWars.UI
             mControls.Add(cursor);
 
             mBuildMode = true;
-
+            mGun = gun;
         }
 
         void BButton_BuildClick(object sender, EventArgs e)
@@ -121,6 +121,7 @@ namespace BlockWars.UI
                 {
                     mControls[i].Visible = isUiVisible;
                     mBuildMode = isUiVisible;
+                    mGun.IsActive = !isUiVisible;
                 }
             }
         }

@@ -20,6 +20,8 @@ namespace BlockWars
 
         private bool mShotDone;
 
+        public bool IsActive;
+
         public Gun(World world, Vector2 position)
         {
             ObjectType = EObjectType.Gun;
@@ -38,6 +40,8 @@ namespace BlockWars
             fixture.SetFilterData(ref filter);
             fixture = mBaseBox.mBody.GetFixtureList();
             fixture.SetFilterData(ref filter);
+
+            IsActive = false;
         }
 
         public override Vector2 GetPosition()
@@ -74,7 +78,7 @@ namespace BlockWars
             Bullet bullet = null;
             if (state.IsKeyDown(Keys.Space))
             {
-                if (!mShotDone)
+                if (!mShotDone && IsActive)
                 {
                     bullet = new Bullet(mWorld, mPosition, 10, 200);
                     bullet.Shot(angle, 1000);
