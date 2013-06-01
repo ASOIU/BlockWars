@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
+using BlockWars.Gameplay;
 
 namespace BlockWars
 {
@@ -26,7 +27,9 @@ namespace BlockWars
 
         private string mTexture;
 
-        public Box(World world, Vector2 position, Vector2 size, string texture, bool isStatic, float health = 100)
+        private Player mPlayer;
+
+        public Box(World world, Vector2 position, Vector2 size, string texture, bool isStatic, Player player, float health = 100)
         {
             ObjectType = EObjectType.Box;
             mHealth = health;
@@ -34,6 +37,7 @@ namespace BlockWars
             mSize = size;
             mWorld = world;
             mTexture = texture;
+            mPlayer = player;
             PolygonShape polygonShape = new PolygonShape();
             polygonShape.SetAsBox(size.X / 2f, size.Y / 2f);
 

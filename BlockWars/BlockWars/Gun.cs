@@ -5,6 +5,7 @@ using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using BlockWars.Gameplay;
 
 namespace BlockWars
 {
@@ -22,17 +23,20 @@ namespace BlockWars
 
         public bool IsActive;
 
-        public Gun(World world, Vector2 position)
+        private Player mPlayer;
+
+        public Gun(World world, Vector2 position, Player player)
         {
             ObjectType = EObjectType.Gun;
             mPosition = position;
             mWorld = world;
+            mPlayer = player;
 
             Vector2 size = new Vector2(14, 8);
-            mBaseBox = new Box(world, position, size, "gun", true);
+            mBaseBox = new Box(world, position, size, "gun", true, player);
 
             size = new Vector2(20, 2);
-            mBarrelBox = new Box(world, position, size, "barrel", true);
+            mBarrelBox = new Box(world, position, size, "barrel", true, player);
 
             Filter filter = new Filter();
             filter.maskBits = 0;
@@ -80,7 +84,7 @@ namespace BlockWars
             {
                 if (!mShotDone && IsActive)
                 {
-                    bullet = new Bullet(mWorld, mPosition, 10, 200);
+                    bullet = new Bullet(mWorld, mPosition, 10, 200, mPlayer);
                     bullet.Shot(angle, 1000);
                     mShotDone = true;
                 }

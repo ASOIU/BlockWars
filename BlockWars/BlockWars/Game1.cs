@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Box2D.XNA;
 using BlockWars.UI;
+using BlockWars.Gameplay;
 
 namespace BlockWars
 {
@@ -28,6 +29,7 @@ namespace BlockWars
         private Builder mBuilder;
         private Camera mCamera;
         private UIManager mUiManager;
+        private Player mPlayer;
 
         private List<Box> mImmortalBoxes;
 
@@ -46,6 +48,7 @@ namespace BlockWars
             mBasicEffect.VertexColorEnabled = true;
             mCamera = new Camera(GraphicsDevice.Viewport, mBasicEffect);
             mPrimitiveRender = new PrimitiveRender(graphics.GraphicsDevice, Content, mCamera);
+            mPlayer = new Player();
 
             Vector2 gravity = new Vector2(0, -10f);
             mWorld = new World(gravity, true);
@@ -60,13 +63,13 @@ namespace BlockWars
 
             pos = new Vector2(0, -20);
             size = new Vector2(10000, 1);
-            Box groundBox = new Box(mWorld, pos, size, "block", true);
+            Box groundBox = new Box(mWorld, pos, size, "block", true, mPlayer);
             mImmortalBoxes.Add(groundBox);
 
             pos = new Vector2(-20, -15);
-            mGun = new Gun(mWorld, pos);
+            mGun = new Gun(mWorld, pos, mPlayer);
 
-            mBuilder = new Builder(mWorld, mCamera);
+            mBuilder = new Builder(mWorld, mCamera, mPlayer);
             mBuilder.Activate();
 
             mUiManager = new UIManager(spriteBatch, Content, mBuilder, mGun);
@@ -85,7 +88,7 @@ namespace BlockWars
                 for (int j = 0; j < n - i; j++)
                 {
                     Vector2 pos = new Vector2(cx + j * bw, cy + i * bh);
-                    Box box = new Box(mWorld, pos, size, "block", true);
+                    Box box = new Box(mWorld, pos, size, "block", true, mPlayer);
                     MassData massData = new MassData();
                     massData.mass = 10;
                     box.mBody.SetMassData(ref massData);
@@ -165,7 +168,7 @@ namespace BlockWars
                     box.ApplyDamage(damage);
                     if (box.mHealth <= 0)
                     {
-                        List<Box> boxs = BoxDestroyer.Destroy(box, mWorld, explosionDistance);
+                        List<Box> boxs = BoxDestroyer.Destroy(box, mWorld, explosionDistance, mPlayer);
                         newBoxes.AddRange(boxs);
                         box.Destroy();
                         mBoxes.Remove(box);
