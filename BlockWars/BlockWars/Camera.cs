@@ -100,5 +100,11 @@ namespace BlockWars
             p.Y = (1.0f - v) * lower.Y + v * upper.Y;
             return p;
         }
+
+        public void SetPosition(Vector2 position)
+        {
+            mPosition = position;
+            UpdateProjection();
+        }
     }
 }

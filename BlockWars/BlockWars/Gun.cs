@@ -20,7 +20,23 @@ namespace BlockWars
 
         private bool mShotDone;
 
-        public bool IsActive;
+        public bool IsActive
+        {
+            get
+            {
+                return mIsActive;
+            }
+            set
+            {
+                mIsActive = value;
+                CurrentMagazine = MagazineSize;
+            }
+        }
+        private bool mIsActive;
+
+
+        private int MagazineSize=3;
+        private int CurrentMagazine;
 
         public Gun(World world, Vector2 position)
         {
@@ -41,7 +57,7 @@ namespace BlockWars
             fixture = mBaseBox.mBody.GetFixtureList();
             fixture.SetFilterData(ref filter);
 
-            IsActive = false;
+            mIsActive = false;
         }
 
         public override Vector2 GetPosition()
@@ -76,21 +92,28 @@ namespace BlockWars
                 angle -= da;
             }
             Bullet bullet = null;
-            if (state.IsKeyDown(Keys.Space))
+            if (state.IsKeyDown(Keys.Space) && (CurrentMagazine != 0))
             {
                 if (!mShotDone && IsActive)
                 {
                     bullet = new Bullet(mWorld, mPosition, 10, 200);
                     bullet.Shot(angle, 1000);
                     mShotDone = true;
+                    CurrentMagazine--;
                 }
             }
             else
             {
                 mShotDone = false;
             }
+            if (CurrentMagazine==0)
+            {
+                mIsActive = false;
+            }
             mBarrelBox.mBody.SetTransform(pos, angle);
             return bullet;
         }
+
+
     }
 }
