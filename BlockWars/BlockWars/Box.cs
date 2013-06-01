@@ -11,6 +11,7 @@ namespace BlockWars
     {
         public Vector2 mSize;
 
+
         public Body mBody;
 
         private bool mIsDestroyed;
