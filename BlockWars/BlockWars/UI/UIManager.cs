@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BlockWars.Gameplay;
 
 namespace BlockWars.UI
 {
@@ -20,6 +21,7 @@ namespace BlockWars.UI
         private SpriteFont mFont;
         private bool mBuildMode;
         private Gun mGun;
+        private Player mPlayer;
 
         public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder, Gun gun)
         {
@@ -160,6 +162,11 @@ namespace BlockWars.UI
             {
                 tab.IsSwitchedOn = true;
             }
+        }
+
+        public void SetActivePlayer(Player player)
+        {
+            mPlayer = player;
         }
 
         public void Update(GameTime gameTime)

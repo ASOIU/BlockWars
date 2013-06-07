@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BlockWars.Gameplay;
 
 namespace BlockWars
 {
@@ -28,12 +29,15 @@ namespace BlockWars
 
         private float mHealth;
 
-        public Builder(World world, Camera camera)
+        private Player mPlayer;
+
+        public Builder(World world, Camera camera, Player player)
         {
             mWorld = world;
             mIsActive = false;
             mCamera = camera;
             mTexture = "block2";
+            mPlayer = player;
         }
 
         public void BuildingBlock(EBlockType blockType)
@@ -78,7 +82,7 @@ namespace BlockWars
             Vector2 size = new Vector2(6, 3);
             MouseState mouseState = Mouse.GetState();
             Vector2 position = new Vector2(mouseState.X, mouseState.Y);
-            mBuildingBox = new Box(mWorld, position, size, mTexture, true, mHealth);
+            mBuildingBox = new Box(mWorld, position, size, mTexture, true, mPlayer, mHealth);
         }
 
         public void Deactivate()

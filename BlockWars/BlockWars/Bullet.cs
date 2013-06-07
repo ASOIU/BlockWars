@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Box2D.XNA;
 using Microsoft.Xna.Framework;
+using BlockWars.Gameplay;
 
 namespace BlockWars
 {
@@ -24,13 +25,13 @@ namespace BlockWars
 
         private float mMaxDamageValue;
 
-        public Bullet(World world, Vector2 position, float damageRadius, float maxDamageValue)
+        public Bullet(World world, Vector2 position, float damageRadius, float maxDamageValue, Player player)
         {
             ObjectType = EObjectType.Bullet;
             mDamageRadius = damageRadius;
             mMaxDamageValue = maxDamageValue;
             Vector2 size = new Vector2(1, 1);
-            mBox = new Box(world, position, size, "bullet", true);
+            mBox = new Box(world, position, size, "bullet", true, player);
             MassData massData = new MassData();
             massData.mass = 1000;
             mBox.mBody.SetMassData(ref massData);
