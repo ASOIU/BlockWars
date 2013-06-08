@@ -234,5 +234,14 @@ namespace BlockWars.UI
             Vector2 pos = new Vector2(0, 0);
             mSpriteBatch.DrawString(mFont, boxLastText, pos, Color.Black);
         }
+
+        public void GameOver(Player player)
+        {
+            mGun.IsActive = false;
+            mBuilder.mIsActive = false;
+            string congrats = "Game Over\n" + player.Name + "WON!";
+            Vector2 pos = new Vector2(200, 100);
+            mSpriteBatch.DrawString(mFont, congrats, pos, Color.Red);
+        }
     }
 }
