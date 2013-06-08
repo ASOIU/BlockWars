@@ -119,6 +119,7 @@
     <Compile Include="ContactListener.cs" />
     <Compile Include="EBlockType.cs" />
     <Compile Include="EObjectType.cs" />
+    <Compile Include="Gameplay\Gameplay.cs" />
     <Compile Include="Gameplay\Player.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="PrimitiveRender.cs" />
