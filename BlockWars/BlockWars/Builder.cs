@@ -15,7 +15,7 @@ namespace BlockWars
     {
         private World mWorld;
 
-        private bool mIsActive;
+        public bool mIsActive;
 
         private Box mBuildingBox;
 
