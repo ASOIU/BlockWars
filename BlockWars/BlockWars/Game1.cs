@@ -48,7 +48,7 @@ namespace BlockWars
             mBasicEffect.VertexColorEnabled = true;
             mCamera = new Camera(GraphicsDevice.Viewport, mBasicEffect);
             mPrimitiveRender = new PrimitiveRender(graphics.GraphicsDevice, Content, mCamera);
-            mPlayer = new Player();
+            mPlayer = new Player(EntityCategory.Player1);
 
             Vector2 gravity = new Vector2(0, -10f);
             mWorld = new World(gravity, true);
@@ -66,7 +66,7 @@ namespace BlockWars
             Box groundBox = new Box(mWorld, pos, size, "block", true, mPlayer);
             mImmortalBoxes.Add(groundBox);
 
-            pos = new Vector2(-20, -15);
+            pos = new Vector2(-20, -7);
             mGun = new Gun(mWorld, pos, mPlayer);
 
             mBuilder = new Builder(mWorld, mCamera, mPlayer);
