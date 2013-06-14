@@ -27,7 +27,7 @@ namespace BlockWars
 
         private string mTexture;
 
-        private Player mPlayer;
+        public Player mPlayer;
 
         public Box(World world, Vector2 position, Vector2 size, string texture, bool isStatic, Player player, float health = 100)
         {
@@ -60,7 +60,12 @@ namespace BlockWars
             fixtureDef.friction = 0.3f;//Сила трения
             fixtureDef.restitution = 0f;//Отскок
 
-            mBody.CreateFixture(fixtureDef);
+            Filter filter = new Filter();
+            filter.maskBits = (ushort)(EntityCategory.Player1 | EntityCategory.Player2);
+            filter.categoryBits = (ushort)player.PlayerType;
+
+            var fixture = mBody.CreateFixture(fixtureDef);
+            fixture.SetFilterData(ref filter);
             MassData data = new MassData();
             data.mass = 0.01f;
             mBody.SetUserData(this);

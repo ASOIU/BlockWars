@@ -16,5 +16,12 @@ namespace BlockWars.Gameplay
             mGun = gun;
             Name = name;
         }
+
+        public EntityCategory PlayerType { get; private set; }
+
+        public Player(EntityCategory playerType)
+        {
+            PlayerType = playerType;
+        }
     }
 }

@@ -15,45 +15,23 @@ namespace BlockWars.Gameplay
 {
     class Gameplay
     {
-        public Player mActivePlayer; 
-
-        public Player mPlayer1;
-
-        public Player mPlayer2;
-
+        int p1, p2;
+        public Player Player1;
+        public Player Player2;
         private UIManager mUIManager;
-
-        private Camera mCamera;
-
-        private Vector2 pos;
-
-        public Gameplay(Camera camera, UIManager UiManager)
+        private void UpdateBlock(List<Box> Boxes)
         {
-            mCamera = camera;
-            mUIManager = UiManager;
-        }
-        public void Update(GameTime gameTime)
-        {
-            if (mActivePlayer == mPlayer1)
+            for (int i = 0; i < Boxes.Count; i++)
             {
-                if (mPlayer1.mGun.CurrentMagazine == 0)
-                {
-                    mUIManager.SetActivePlayer(mPlayer2);
-                    pos = mPlayer2.mGun.mPosition;
-                    mCamera.SetPosition(pos);
-                    mActivePlayer = mPlayer2;
-                }
+                if (Boxes[i].mPlayer == Player1)
+                    p1++;
+                else
+                    p2++;
             }
-            else if (mActivePlayer == mPlayer2)
-            {
-                if (mPlayer2.mGun.CurrentMagazine == 0)
-                {
-                    mUIManager.SetActivePlayer(mPlayer1);
-                    pos = mPlayer1.mGun.mPosition;
-                    mCamera.SetPosition(pos);
-                    mActivePlayer = mPlayer1;
-                }
-            }
+            if (p1 == 0)
+                mUIManager.GameOver(Player2);
+            if (p2 == 0)
+                mUIManager.GameOver(Player1);
         }
     }
 }

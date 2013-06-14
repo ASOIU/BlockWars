@@ -9,8 +9,9 @@ using BlockWars.Gameplay;
 
 namespace BlockWars
 {
-    class Gun:AGameObject
+    class Gun : AGameObject
     {
+
         public Vector2 mPosition;
 
         private Box mBaseBox;
@@ -37,7 +38,10 @@ namespace BlockWars
         private bool mIsActive;
 
 
-        private int MagazineSize=3;
+
+        private int MagazineSize = 3;
+
+
         public int CurrentMagazine
         {
             get;
@@ -45,6 +49,7 @@ namespace BlockWars
         }
 
         private Player mPlayer;
+        private Filter mFilter;
 
         public Gun(World world, Vector2 position, Player player)
         {
@@ -53,10 +58,12 @@ namespace BlockWars
             mWorld = world;
             mPlayer = player;
 
-            Vector2 size = new Vector2(14, 8);
+
+            Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
 
-            size = new Vector2(20, 2);
+
+            size = new Vector2(10, 2);
             mBarrelBox = new Box(world, position, size, "barrel", true, player);
 
             Filter filter = new Filter();
@@ -67,6 +74,13 @@ namespace BlockWars
             fixture.SetFilterData(ref filter);
 
             mIsActive = false;
+
+            mFilter = new Filter();
+            if (mPlayer.PlayerType == EntityCategory.Player2)
+                mFilter.maskBits = (ushort)(EntityCategory.Player1);
+            else
+                mFilter.maskBits = (ushort)(EntityCategory.Player2);
+            mFilter.categoryBits = (ushort)mPlayer.PlayerType;
         }
 
         public override Vector2 GetPosition()
@@ -106,6 +120,9 @@ namespace BlockWars
                 if (!mShotDone && IsActive)
                 {
                     bullet = new Bullet(mWorld, mPosition, 10, 200, mPlayer);
+                    var fixture = bullet.Body.GetFixtureList();
+                    fixture.SetFilterData(ref mFilter);
+
                     bullet.Shot(angle, 1000);
                     mShotDone = true;
                     CurrentMagazine--;
@@ -115,7 +132,8 @@ namespace BlockWars
             {
                 mShotDone = false;
             }
-            if (CurrentMagazine==0)
+
+            if (CurrentMagazine == 0)
             {
                 mIsActive = false;
             }

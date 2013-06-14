@@ -30,7 +30,7 @@ namespace BlockWars
             ObjectType = EObjectType.Bullet;
             mDamageRadius = damageRadius;
             mMaxDamageValue = maxDamageValue;
-            Vector2 size = new Vector2(3, 3);
+            Vector2 size = new Vector2(5, 5);
             mBox = new Box(world, position, size, "bullet", true, player);
             MassData massData = new MassData();
             massData.mass = 1000;
