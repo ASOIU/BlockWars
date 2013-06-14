@@ -11,7 +11,7 @@ namespace BlockWars
 {
     class Gun:AGameObject
     {
-        private Vector2 mPosition;
+        public Vector2 mPosition;
 
         private Box mBaseBox;
 
@@ -33,11 +33,16 @@ namespace BlockWars
                 CurrentMagazine = MagazineSize;
             }
         }
+
         private bool mIsActive;
 
 
         private int MagazineSize=3;
-        private int CurrentMagazine;
+        public int CurrentMagazine
+        {
+            get;
+            set;
+        }
 
         private Player mPlayer;
 
