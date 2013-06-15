@@ -25,7 +25,7 @@ namespace BlockWars
 
         private Camera mCamera;
 
-        public PrimitiveRender(GraphicsDevice graphicsDevice, ContentManager contentManager, Camera camera)
+        public PrimitiveRender(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, ContentManager contentManager, Camera camera)
         {
             mCamera = camera;
             const int initalCapacity = 10240;//Начальный размер массива
@@ -35,7 +35,7 @@ namespace BlockWars
             mBufferVerteces = new VertexPositionColor[64];
             mPointBuffer = new Vector2[64];
 
-            mSpriteBatch = new SpriteBatch(graphicsDevice);
+            mSpriteBatch = spriteBatch;
             mTextures = new Dictionary<string, Texture2D>();
             Texture2D texture = contentManager.Load<Texture2D>("textures\\block3");
             mTextures.Add("block", texture);

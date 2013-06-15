@@ -49,7 +49,7 @@ namespace BlockWars
             mBasicEffect = new BasicEffect(graphics.GraphicsDevice);
             mBasicEffect.VertexColorEnabled = true;
             mCamera = new Camera(GraphicsDevice.Viewport, mBasicEffect);
-            mPrimitiveRender = new PrimitiveRender(graphics.GraphicsDevice, Content, mCamera);
+            mPrimitiveRender = new PrimitiveRender(graphics.GraphicsDevice, spriteBatch, Content, mCamera);
 
             Vector2 gravity = new Vector2(0, -10f);
             mWorld = new World(gravity, true);
@@ -209,7 +209,7 @@ namespace BlockWars
             }
 
             mPrimitiveRender.BeginDraw();
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
 
             for (int i = 0; i < mBoxes.Count; i++)
             {
@@ -233,7 +233,7 @@ namespace BlockWars
             mUiManager.Draw();
 
             mPrimitiveRender.EndDraw();
-            spriteBatch.End();
+            //spriteBatch.End();
 
             base.Draw(gameTime);
         }
