@@ -22,6 +22,7 @@ namespace BlockWars.UI
         private bool mBuildMode;
         private Gun mGun;
         private Player mPlayer;
+        private string mPlayerName;
 
         public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder, Gun gun)
         {
@@ -167,6 +168,9 @@ namespace BlockWars.UI
         public void SetActivePlayer(Player player)
         {
             mPlayer = player;
+            mPlayerName = "Player: " + mPlayer.Name;
+            mBuilder.SetActivePlayer(player);
+            Console.WriteLine(mBuilder.mPlayer.Name);
         }
 
         public void Update(GameTime gameTime)
@@ -233,6 +237,9 @@ namespace BlockWars.UI
             string boxLastText = "Box Last: " + mBuilder.mBoxLast;
             Vector2 pos = new Vector2(0, 0);
             mSpriteBatch.DrawString(mFont, boxLastText, pos, Color.Black);
+            
+            pos = new Vector2(0, 21);
+            mSpriteBatch.DrawString(mFont, mPlayerName, pos, Color.Black);
         }
 
         public void GameOver(Player player)

@@ -30,6 +30,7 @@ namespace BlockWars
         private Camera mCamera;
         private UIManager mUiManager;
         private Player mPlayer;
+        private Gameplay.Gameplay mGameplay;
 
         private List<Box> mImmortalBoxes;
 
@@ -41,6 +42,11 @@ namespace BlockWars
 
         protected override void Initialize()
         {
+            /*
+             * Создание Gameplay
+             * Создание объектов
+             * Передать Gun 
+             */
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mImmortalBoxes = new List<Box>();
             mBullets = new List<Bullet>();
@@ -69,10 +75,12 @@ namespace BlockWars
             pos = new Vector2(-20, -7);
             mGun = new Gun(mWorld, pos, mPlayer);
 
-            mBuilder = new Builder(mWorld, mCamera, mPlayer);
+            mBuilder = new Builder(mWorld, mCamera);
             mBuilder.Activate();
 
             mUiManager = new UIManager(spriteBatch, Content, mBuilder, mGun);
+
+            mGameplay = new Gameplay.Gameplay(mCamera, mUiManager);
 
             base.Initialize();
         }
@@ -127,6 +135,10 @@ namespace BlockWars
             mCamera.Update(gameTime);
 
             mUiManager.Update(gameTime);
+
+            mGameplay.Update(gameTime);
+
+           /*mUiManager.SetActivePlayer(mPlayer);*/
 
             base.Update(gameTime);
         }

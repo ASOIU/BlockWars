@@ -11,7 +11,8 @@ namespace BlockWars
 {
     class Gun : AGameObject
     {
-        private Vector2 mPosition;
+
+        public Vector2 mPosition;
 
         private Box mBaseBox;
 
@@ -33,12 +34,19 @@ namespace BlockWars
                 CurrentMagazine = MagazineSize;
             }
         }
+
         private bool mIsActive;
+
 
 
         private int MagazineSize = 3;
 
-        private int CurrentMagazine;
+
+        public int CurrentMagazine
+        {
+            get;
+            set;
+        }
 
         private Player mPlayer;
         private Filter mFilter;
@@ -50,8 +58,10 @@ namespace BlockWars
             mWorld = world;
             mPlayer = player;
 
+
             Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
+
 
             size = new Vector2(10, 2);
             mBarrelBox = new Box(world, position, size, "barrel", true, player);
@@ -122,6 +132,7 @@ namespace BlockWars
             {
                 mShotDone = false;
             }
+
             if (CurrentMagazine == 0)
             {
                 mIsActive = false;

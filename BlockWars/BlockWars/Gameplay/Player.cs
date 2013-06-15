@@ -8,7 +8,14 @@ namespace BlockWars.Gameplay
     class Player
     {
         public int mResources;
-        private Gun mGun;
+        public Gun mGun;
+        public string Name { get; set; }
+
+        public Player(Gun gun, string name = "Player")
+        {
+            mGun = gun;
+            Name = name;
+        }
 
         public EntityCategory PlayerType { get; private set; }
 

@@ -29,14 +29,18 @@ namespace BlockWars
 
         private float mHealth;
 
-        private Player mPlayer;
+        public Player mPlayer;
 
-        public Builder(World world, Camera camera, Player player)
+        public Builder(World world, Camera camera)
         {
             mWorld = world;
             mIsActive = false;
             mCamera = camera;
             mTexture = "block2";
+        }
+
+        public void SetActivePlayer(Player player)
+        {
             mPlayer = player;
         }
 

@@ -27,7 +27,7 @@ namespace BlockWars
 
         private string mTexture;
 
-        private Player mPlayer;
+        public Player mPlayer;
 
         public Box(World world, Vector2 position, Vector2 size, string texture, bool isStatic, Player player, float health = 100)
         {
