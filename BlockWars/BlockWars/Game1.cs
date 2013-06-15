@@ -42,11 +42,6 @@ namespace BlockWars
 
         protected override void Initialize()
         {
-            /*
-             * Создание Gameplay
-             * Создание объектов
-             * Передать Gun 
-             */
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mImmortalBoxes = new List<Box>();
             mBullets = new List<Bullet>();
@@ -54,12 +49,17 @@ namespace BlockWars
             mBasicEffect.VertexColorEnabled = true;
             mCamera = new Camera(GraphicsDevice.Viewport, mBasicEffect);
             mPrimitiveRender = new PrimitiveRender(graphics.GraphicsDevice, Content, mCamera);
-            mPlayer = new Player(EntityCategory.Player1);
 
             Vector2 gravity = new Vector2(0, -10f);
             mWorld = new World(gravity, true);
             mContactListener = new ContactListener();
             mWorld.ContactListener = mContactListener;
+
+            mBuilder = new Builder(mWorld, mCamera);
+
+            mUiManager = new UIManager(spriteBatch, Content, mBuilder);
+            mGameplay = new Gameplay.Gameplay(mCamera, mUiManager);
+            mPlayer = mGameplay.Player1;
 
             Vector2 pos = new Vector2(0, 30);
             Vector2 size = new Vector2(2, 2);
@@ -75,13 +75,12 @@ namespace BlockWars
             pos = new Vector2(-20, -7);
             mGun = new Gun(mWorld, pos, mPlayer);
 
-            mBuilder = new Builder(mWorld, mCamera);
+            pos = new Vector2(100, -7);
+            Gun gunPlayer2 = new Gun(mWorld, pos, mGameplay.Player2);
+            mPlayer.Gun = mGun;
+            mGameplay.Player2.Gun = gunPlayer2;
+
             mBuilder.Activate();
-
-            mUiManager = new UIManager(spriteBatch, Content, mBuilder, mGun);
-
-            mGameplay = new Gameplay.Gameplay(mCamera, mUiManager);
-
             base.Initialize();
         }
 
@@ -138,7 +137,7 @@ namespace BlockWars
 
             mGameplay.Update(gameTime);
 
-           /*mUiManager.SetActivePlayer(mPlayer);*/
+            /*mUiManager.SetActivePlayer(mPlayer);*/
 
             base.Update(gameTime);
         }

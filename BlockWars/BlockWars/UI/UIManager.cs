@@ -20,11 +20,10 @@ namespace BlockWars.UI
         private SpriteBatch mSpriteBatch;
         private SpriteFont mFont;
         private bool mBuildMode;
-        private Gun mGun;
         private Player mPlayer;
         private string mPlayerName;
 
-        public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder, Gun gun)
+        public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder)
         {
             mFont = contentManager.Load<SpriteFont>("Font");
             mSpriteBatch = spriteBatch;
@@ -111,7 +110,6 @@ namespace BlockWars.UI
             mControls.Add(cursor);
 
             mBuildMode = true;
-            mGun = gun;
         }
 
         void BButton_BuildClick(object sender, EventArgs e)
@@ -124,7 +122,10 @@ namespace BlockWars.UI
                 {
                     mControls[i].Visible = isUiVisible;
                     mBuildMode = isUiVisible;
-                    mGun.IsActive = !isUiVisible;
+                    if (mPlayer.Gun != null)
+                    {
+                        mPlayer.Gun.IsActive = !isUiVisible;
+                    }
                 }
             }
         }
@@ -237,14 +238,13 @@ namespace BlockWars.UI
             string boxLastText = "Box Last: " + mBuilder.mBoxLast;
             Vector2 pos = new Vector2(0, 0);
             mSpriteBatch.DrawString(mFont, boxLastText, pos, Color.Black);
-            
+
             pos = new Vector2(0, 21);
             mSpriteBatch.DrawString(mFont, mPlayerName, pos, Color.Black);
         }
 
         public void GameOver(Player player)
         {
-            mGun.IsActive = false;
             mBuilder.mIsActive = false;
             string congrats = "Game Over\n" + player.Name + "WON!";
             Vector2 pos = new Vector2(200, 100);

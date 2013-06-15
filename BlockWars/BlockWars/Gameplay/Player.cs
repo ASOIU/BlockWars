@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BlockWars.Gameplay
+﻿namespace BlockWars.Gameplay
 {
     class Player
     {
-        public int mResources;
-        public Gun mGun;
+        public int Resources { get; set; }
+        public Gun Gun { get; set; }
         public string Name { get; set; }
-
-        public Player(Gun gun, string name = "Player")
-        {
-            mGun = gun;
-            Name = name;
-        }
-
         public EntityCategory PlayerType { get; private set; }
 
-        public Player(EntityCategory playerType)
+        public Player(EntityCategory playerType, string name = "Player")
         {
+            Name = name;
             PlayerType = playerType;
         }
     }

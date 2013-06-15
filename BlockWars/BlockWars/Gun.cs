@@ -37,10 +37,7 @@ namespace BlockWars
 
         private bool mIsActive;
 
-
-
         private int MagazineSize = 3;
-
 
         public int CurrentMagazine
         {
@@ -57,7 +54,6 @@ namespace BlockWars
             mPosition = position;
             mWorld = world;
             mPlayer = player;
-
 
             Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
