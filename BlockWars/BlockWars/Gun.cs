@@ -31,13 +31,13 @@ namespace BlockWars
             set
             {
                 mIsActive = value;
-                CurrentMagazine = MagazineSize;
+                CurrentMagazine = mMagazineSize;
             }
         }
 
         private bool mIsActive;
 
-        private int MagazineSize = 3;
+        private int mMagazineSize = 3;
 
         public int CurrentMagazine
         {
@@ -77,6 +77,7 @@ namespace BlockWars
             else
                 mFilter.maskBits = (ushort)(EntityCategory.Player2);
             mFilter.categoryBits = (ushort)mPlayer.PlayerType;
+            CurrentMagazine = mMagazineSize;
         }
 
         public override Vector2 GetPosition()

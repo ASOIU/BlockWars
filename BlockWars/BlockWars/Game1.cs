@@ -24,7 +24,7 @@ namespace BlockWars
         private World mWorld;
         private List<Box> mBoxes;
         private List<Bullet> mBullets;
-        private Gun mGun;
+        private List<Gun> mGuns;
         private ContactListener mContactListener;
         private Builder mBuilder;
         private Camera mCamera;
@@ -45,6 +45,7 @@ namespace BlockWars
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mImmortalBoxes = new List<Box>();
             mBullets = new List<Bullet>();
+            mGuns = new List<Gun>();
             mBasicEffect = new BasicEffect(graphics.GraphicsDevice);
             mBasicEffect.VertexColorEnabled = true;
             mCamera = new Camera(GraphicsDevice.Viewport, mBasicEffect);
@@ -73,11 +74,14 @@ namespace BlockWars
             mImmortalBoxes.Add(groundBox);
 
             pos = new Vector2(-20, -7);
-            mGun = new Gun(mWorld, pos, mPlayer);
+            Gun gunPlayer1 = new Gun(mWorld, pos, mPlayer);
+            mGuns.Add(gunPlayer1);
+            mPlayer.Gun = gunPlayer1;
+
 
             pos = new Vector2(100, -7);
             Gun gunPlayer2 = new Gun(mWorld, pos, mGameplay.Player2);
-            mPlayer.Gun = mGun;
+            mGuns.Add(gunPlayer2);
             mGameplay.Player2.Gun = gunPlayer2;
 
             mBuilder.Activate();
@@ -114,10 +118,13 @@ namespace BlockWars
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            Bullet bullet = mGun.Update(gameTime);
-            if (bullet != null)
+            for (int i = 0; i < mGuns.Count; i++)
             {
-                mBullets.Add(bullet);
+                Bullet bullet = mGuns[i].Update(gameTime);
+                if (bullet != null)
+                {
+                    mBullets.Add(bullet);
+                }
             }
 
             const float timeStep = 1f / 60f;
@@ -217,7 +224,10 @@ namespace BlockWars
                 mBullets[i].Draw(mPrimitiveRender);
             }
 
-            mGun.Draw(mPrimitiveRender);
+            for (int i = 0; i < mGuns.Count; i++)
+            {
+                mGuns[i].Draw(mPrimitiveRender);
+            }
             mBuilder.Draw(mPrimitiveRender, spriteBatch);
 
             mUiManager.Draw();
