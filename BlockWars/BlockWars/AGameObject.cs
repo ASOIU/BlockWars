@@ -12,6 +12,7 @@ namespace BlockWars
 
         public abstract Vector2 GetPosition();
 
+
         public abstract void SetPosition(Vector2 position);
     }
 
