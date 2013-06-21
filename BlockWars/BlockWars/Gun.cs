@@ -37,7 +37,7 @@ namespace BlockWars
 
         private bool mIsActive;
 
-        private int mMagazineSize = 3;
+        public int mMagazineSize = 3;
 
         public int CurrentMagazine
         {

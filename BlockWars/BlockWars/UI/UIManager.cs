@@ -75,9 +75,9 @@ namespace BlockWars.UI
             mControls.Add(tab);
             mTabs.Add(tab);
 
-            texture = contentManager.Load<Texture2D>("textures\\UI\\box_switched_on");
-            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box3_switched_off");
-            texture3 = contentManager.Load<Texture2D>("textures\\UI\\box_active");
+            texture = contentManager.Load<Texture2D>("textures\\UI\\box4_switched_on");
+            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box4_switched_off");
+            texture3 = contentManager.Load<Texture2D>("textures\\UI\\box4_active");
             Switcher block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(10, 390);
             block.Click += switcher_Click;
@@ -85,18 +85,18 @@ namespace BlockWars.UI
             mControls.Add(block);
             mButtons.Add(block);
 
-            texture = contentManager.Load<Texture2D>("textures\\UI\\box_switched_on");
-            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box2_switched_off");
-            texture3 = contentManager.Load<Texture2D>("textures\\UI\\box_active");
+            texture = contentManager.Load<Texture2D>("textures\\UI\\box3_switched_on");
+            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box3_switched_off");
+            texture3 = contentManager.Load<Texture2D>("textures\\UI\\box3_active");
             block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(95, 390);
             block.Click += switcher_Click;
             mControls.Add(block);
             mButtons.Add(block);
 
-            texture = contentManager.Load<Texture2D>("textures\\UI\\box_switched_on");
-            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box4_switched_off");
-            texture3 = contentManager.Load<Texture2D>("textures\\UI\\box_active");
+            texture = contentManager.Load<Texture2D>("textures\\UI\\box2_switched_on");
+            texture2 = contentManager.Load<Texture2D>("textures\\UI\\box2_switched_off");
+            texture3 = contentManager.Load<Texture2D>("textures\\UI\\box2_active");
             block = new Switcher(spriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(180, 390);
             block.Click += switcher_Click;
@@ -241,6 +241,10 @@ namespace BlockWars.UI
 
             pos = new Vector2(0, 21);
             mSpriteBatch.DrawString(mFont, mPlayerName, pos, Color.Black);
+
+            string cage = mPlayer.Gun.CurrentMagazine + "/" + mPlayer.Gun.mMagazineSize;
+            pos = new Vector2(0, 41);
+            mSpriteBatch.DrawString(mFont, cage, pos, Color.Black);
         }
 
         public void GameOver(Player player)

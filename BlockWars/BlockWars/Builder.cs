@@ -36,7 +36,7 @@ namespace BlockWars
             mWorld = world;
             mIsActive = false;
             mCamera = camera;
-            mTexture = "block2";
+            mTexture = "block3";
         }
 
         public void SetActivePlayer(Player player)
@@ -50,19 +50,19 @@ namespace BlockWars
             {
                 case EBlockType.Light:
                     {
-                        mTexture = "block2";
+                        mTexture = "block3";
                         mHealth = 100;
                         break;
                     }
                 case EBlockType.Normal:
                     {
-                        mTexture = "block";
+                        mTexture = "block2";
                         mHealth = 200;
                         break;
                     }
                 case EBlockType.Hard:
                     {
-                        mTexture = "block3";
+                        mTexture = "block";
                         mHealth = 300;
                         break;
                     }
