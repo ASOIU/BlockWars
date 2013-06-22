@@ -67,7 +67,7 @@ namespace BlockWars
             y = power * (float)Math.Sin(angle);
             Vector2 impulse = new Vector2(x, y);
             mBox.mBody.SetType(BodyType.Dynamic);
-            mBox.mBody.ApplyLinearImpulse(impulse, Vector2.Zero);
+            mBox.mBody.ApplyLinearImpulse(impulse, mBox.mBody.GetPosition());
             mIsActive = true;
         }
 
