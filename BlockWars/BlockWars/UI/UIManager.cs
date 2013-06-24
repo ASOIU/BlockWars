@@ -141,7 +141,7 @@ namespace BlockWars.UI
                     if (mButtons[i] != block)
                     {
                         mButtons[i].IsSwitchedOn = false;
-                        mBuilder.BuildingBlock((EBlockType)mButtons.IndexOf(block));
+                        mBuilder.BuildingBlock((PlayerData.ObjectType)mButtons.IndexOf(block));
                     }
                 }
             }
@@ -235,7 +235,7 @@ namespace BlockWars.UI
             {
                 mControls[i].Draw();
             }
-            string boxLastText = "Box Last: " + mBuilder.mBoxLast;
+            string boxLastText = "Resources: " + mBuilder.mPlayer.Resources.GetResources();
             Vector2 pos = new Vector2(0, 0);
             mSpriteBatch.DrawString(mFont, boxLastText, pos, Color.Black);
 

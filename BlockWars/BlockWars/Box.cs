@@ -20,6 +20,8 @@ namespace BlockWars
 
         public float mHealth;
 
+        public float mStartHealth;
+
         public string Texture
         {
             get { return mTexture; }
@@ -33,6 +35,7 @@ namespace BlockWars
         {
             ObjectType = EObjectType.Box;
             mHealth = health;
+            mStartHealth = health;
             mIsDestroyed = false;
             mSize = size;
             mWorld = world;

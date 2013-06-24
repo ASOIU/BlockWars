@@ -21,11 +21,11 @@ namespace BlockWars
 
         private ButtonState mLastButtonState;
 
-        public int mBoxLast;
-
         private Camera mCamera;
 
         private string mTexture;
+
+		PlayerData.ObjectType CurrentType;
 
         private float mHealth;
 
@@ -44,23 +44,24 @@ namespace BlockWars
             mPlayer = player;
         }
 
-        public void BuildingBlock(EBlockType blockType)
+        public void BuildingBlock(PlayerData.ObjectType blockType)
         {
+			CurrentType = blockType;
             switch (blockType)
             {
-                case EBlockType.Light:
+				case PlayerData.ObjectType.Block1:
                     {
                         mTexture = "block3";
                         mHealth = 100;
                         break;
                     }
-                case EBlockType.Normal:
+				case PlayerData.ObjectType.Block2:
                     {
                         mTexture = "block2";
                         mHealth = 200;
                         break;
                     }
-                case EBlockType.Hard:
+				case PlayerData.ObjectType.Block3:
                     {
                         mTexture = "block";
                         mHealth = 300;
@@ -75,7 +76,6 @@ namespace BlockWars
         {
             if (!mIsActive)
             {
-                mBoxLast = 100;
                 mIsActive = true;
                 CreateBox();
             }
@@ -119,16 +119,12 @@ namespace BlockWars
                 if (mouseState.LeftButton == ButtonState.Pressed &&
                     mLastButtonState == ButtonState.Released)
                 {
-                    buildingObject = mBuildingBox;
-                    if (mBoxLast > 0)
-                    {
-                        CreateBox();
-                        mBoxLast--;
-                    }
-                }
-                if (mBoxLast == 0)
-                {
-                    Deactivate();
+                    
+					if (mPlayer.Resources.RemoveResources(CurrentType))
+					{
+						buildingObject = mBuildingBox;
+						CreateBox();
+					}
                 }
                 mLastButtonState = mouseState.LeftButton;
             }

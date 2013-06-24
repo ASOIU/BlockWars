@@ -187,6 +187,7 @@ namespace BlockWars
                     if (box.mHealth <= 0)
                     {
                         List<Box> boxs = BoxDestroyer.Destroy(box, mWorld, explosionDistance, mPlayer);
+                        bullet.mPlayer.Resources.AddResourcesBlockDestroy((int)box.mStartHealth);
                         newBoxes.AddRange(boxs);
                         box.Destroy();
                         mBoxes.Remove(box);
