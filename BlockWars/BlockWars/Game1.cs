@@ -66,6 +66,8 @@ namespace BlockWars
             Vector2 size = new Vector2(2, 2);
             mBoxes = new List<Box>();
 
+            AddPyramid(300, -19.5f, 12);
+
             pos = new Vector2(0, -20);
             size = new Vector2(10000, 1);
             Box groundBox = new Box(mWorld, pos, size, "block", true, mPlayer);
@@ -82,107 +84,28 @@ namespace BlockWars
             mGuns.Add(gunPlayer2);
             mGameplay.Player2.Gun = gunPlayer2;
 
-            CreateBuilding(Gameplay.EntityCategory.Player1);
-            CreateBuilding(Gameplay.EntityCategory.Player2);
-
             mBuilder.Activate();
             base.Initialize();
         }
 
-        private void CreateBuilding(Gameplay.EntityCategory playerType)
+        private void AddPyramid(float x, float y, int n)
         {
-            switch (playerType)
+            float bw = 6, bh = 3;
+            float cx = x - bw * n / 2f + bw / 2f,
+                  cy = y + bh / 2f;
+            Vector2 size = new Vector2(bw, bh);
+            for (int i = 0; i < n; i++)
             {
-                case(EntityCategory.Player1):
-                    {
-                        float x, y;
-                        y = -18f;
-                        float bw, bh;
-                        bw = 6;
-                        bh = 3;
-                        Vector2 position;
-                        Vector2 size;
-                        Box box;
-                        for (int i = 0; i < 8; i++)
-                        {
-                            x = -300;
-                            for (int j = 0; j < 3; j++)
-                            {
-                                position = new Vector2(x, y);
-                                size = new Vector2(bw, bh);
-                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, 1000);
-                                mBoxes.Add(box);
-                                x -= bw;
-                            }
-                            y += bh;
-                        } 
-                        x = -297;
-                        y = 5.8f;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, 1000);
-                            mBoxes.Add(box);
-                            x -= bw;
-                        }
-                        x = -297;
-                        y = 8.8f;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, 1000);
-                            mBoxes.Add(box);
-                            x -= bw+bw/2f;
-                        }
-                        break;
-                    }
-                case (EntityCategory.Player2):
-                    {
-                        float x, y;
-                        y = -18f;
-                        float bw, bh;
-                        bw = 6;
-                        bh = 3;
-                        Vector2 position;
-                        Vector2 size;
-                        Box box;
-                        for (int i = 0; i < 8; i++)
-                        {
-                            x = 300;
-                            for (int j = 0; j < 3; j++)
-                            {
-                                position = new Vector2(x, y);
-                                size = new Vector2(bw, bh);
-                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, 1000);
-                                mBoxes.Add(box);
-                                x -= bw;
-                            }
-                            y += bh;
-                        }
-                        x = 303;
-                        y = 5.8f;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, 1000);
-                            mBoxes.Add(box);
-                            x -= bw;
-                        }
-                        x = 303;
-                        y = 8.8f;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, 1000);
-                            mBoxes.Add(box);
-                            x -= bw + bw / 2f;
-                        }
-                        break;
-                    }
+                for (int j = 0; j < n - i; j++)
+                {
+                    Vector2 pos = new Vector2(cx + j * bw, cy + i * bh);
+                    Box box = new Box(mWorld, pos, size, "block", true, mPlayer);
+                    MassData massData = new MassData();
+                    massData.mass = 10;
+                    box.mBody.SetMassData(ref massData);
+                    mBoxes.Add(box);
+                }
+                cx += bw / 2f;
             }
         }
 
@@ -264,6 +187,7 @@ namespace BlockWars
                     if (box.mHealth <= 0)
                     {
                         List<Box> boxs = BoxDestroyer.Destroy(box, mWorld, explosionDistance, mPlayer);
+                        bullet.mPlayer.Resources.AddResourcesBlockDestroy((int)box.mStartHealth);
                         newBoxes.AddRange(boxs);
                         box.Destroy();
                         mBoxes.Remove(box);

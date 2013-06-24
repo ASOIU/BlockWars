@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockWarsContent", "BlockWars\BlockWarsContent\BlockWarsContent.contentproj", "{6861BC02-4396-4AB3-8346-1529A0D80439}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockWars", "BlockWars\BlockWars\BlockWars.csproj", "{CF5C6374-3F3D-48CB-8740-759FB18C8FE2}"
