@@ -25,7 +25,7 @@ namespace BlockWars
 
         private string mTexture;
 
-		PlayerData.ObjectType CurrentType;
+        PlayerData.ObjectType CurrentType;
 
         private float mHealth;
 
@@ -46,22 +46,22 @@ namespace BlockWars
 
         public void BuildingBlock(PlayerData.ObjectType blockType)
         {
-			CurrentType = blockType;
+            CurrentType = blockType;
             switch (blockType)
             {
-				case PlayerData.ObjectType.Block1:
+                case PlayerData.ObjectType.Block1:
                     {
                         mTexture = "block3";
                         mHealth = 100;
                         break;
                     }
-				case PlayerData.ObjectType.Block2:
+                case PlayerData.ObjectType.Block2:
                     {
                         mTexture = "block2";
                         mHealth = 200;
                         break;
                     }
-				case PlayerData.ObjectType.Block3:
+                case PlayerData.ObjectType.Block3:
                     {
                         mTexture = "block";
                         mHealth = 300;
@@ -124,10 +124,11 @@ namespace BlockWars
                     mLastButtonState == ButtonState.Released)
                 {
                     if (mPlayer.CheckingBorder(position.X, position.Y, mPlayer.PlayerType))
-					if (mPlayer.Resources.RemoveResources(CurrentType))
+                    {
+                        if (mPlayer.Resources.RemoveResources(CurrentType))
                         {
                             buildingObject = mBuildingBox;
-						    CreateBox();
+                            CreateBox();
                         }
                     }
                 }
