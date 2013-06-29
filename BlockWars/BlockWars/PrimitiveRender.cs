@@ -43,10 +43,6 @@ namespace BlockWars
             mTextures.Add("block2", texture);
             texture = contentManager.Load<Texture2D>("textures\\block8");
             mTextures.Add("block3", texture);
-            texture = contentManager.Load<Texture2D>("textures\\base_block");
-            mTextures.Add("base-block", texture);
-            texture = contentManager.Load<Texture2D>("textures\\block1");
-            mTextures.Add("disableblock", texture);
             texture = contentManager.Load<Texture2D>("textures\\gun");
             mTextures.Add("gun", texture);
             texture = contentManager.Load<Texture2D>("textures\\barrel");

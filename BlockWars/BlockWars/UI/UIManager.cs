@@ -171,6 +171,7 @@ namespace BlockWars.UI
             mPlayer = player;
             mPlayerName = "Player: " + mPlayer.Name;
             mBuilder.SetActivePlayer(player);
+            Console.WriteLine(mBuilder.mPlayer.Name);
         }
 
         public void Update(GameTime gameTime)
@@ -249,7 +250,7 @@ namespace BlockWars.UI
         public void GameOver(Player player)
         {
             mBuilder.mIsActive = false;
-            string congrats = "Game Over\n" + player.Name + "WIN!";
+            string congrats = "Game Over\n" + player.Name + "WON!";
             Vector2 pos = new Vector2(200, 100);
             mSpriteBatch.DrawString(mFont, congrats, pos, Color.Red);
         }

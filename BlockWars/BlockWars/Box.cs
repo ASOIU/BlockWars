@@ -25,7 +25,6 @@ namespace BlockWars
         public string Texture
         {
             get { return mTexture; }
-            set { }
         }
 
         private string mTexture;
