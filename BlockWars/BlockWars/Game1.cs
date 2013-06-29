@@ -31,6 +31,7 @@ namespace BlockWars
         private UIManager mUiManager;
         private Player mPlayer;
         private Gameplay.Gameplay mGameplay;
+        private Gameplay.CreateBase mCreateBase; 
 
         private List<Box> mImmortalBoxes;
 
@@ -62,6 +63,8 @@ namespace BlockWars
             mGameplay = new Gameplay.Gameplay(mCamera, mUiManager);
             mPlayer = mGameplay.Player1;
 
+            mCreateBase = new CreateBase();
+
             Vector2 pos = new Vector2(0, 30);
             Vector2 size = new Vector2(2, 2);
             mBoxes = new List<Box>();
@@ -71,26 +74,26 @@ namespace BlockWars
             Box groundBox = new Box(mWorld, pos, size, "block", true, mPlayer);
             mImmortalBoxes.Add(groundBox);
 
-            pos = new Vector2(-20, -7);
+            pos = new Vector2(-150, -7);
             Gun gunPlayer1 = new Gun(mWorld, pos, mPlayer);
             mGuns.Add(gunPlayer1);
             mPlayer.Gun = gunPlayer1;
 
-
-            pos = new Vector2(100, -7);
+            pos = new Vector2(140, -7);
             Gun gunPlayer2 = new Gun(mWorld, pos, mGameplay.Player2);
             mGuns.Add(gunPlayer2);
             mGameplay.Player2.Gun = gunPlayer2;
 
-            CreateBuilding(Gameplay.EntityCategory.Player1);
-            CreateBuilding(Gameplay.EntityCategory.Player2);
+            mBoxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player1));
+            mBoxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player2));
 
             mBuilder.Activate();
             base.Initialize();
         }
 
-        private void CreateBuilding(Gameplay.EntityCategory playerType)
+        /*private void CreateBuilding(Gameplay.EntityCategory playerType)
         {
+            int strength = 1000;
             switch (playerType)
             {
                 case(EntityCategory.Player1):
@@ -110,7 +113,7 @@ namespace BlockWars
                             {
                                 position = new Vector2(x, y);
                                 size = new Vector2(bw, bh);
-                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, 1000);
+                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, strength);
                                 mBoxes.Add(box);
                                 x -= bw;
                             }
@@ -122,7 +125,7 @@ namespace BlockWars
                         {
                             position = new Vector2(x, y);
                             size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, 1000);
+                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, strength);
                             mBoxes.Add(box);
                             x -= bw;
                         }
@@ -132,7 +135,7 @@ namespace BlockWars
                         {
                             position = new Vector2(x, y);
                             size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, 1000);
+                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, strength);
                             mBoxes.Add(box);
                             x -= bw+bw/2f;
                         }
@@ -155,7 +158,7 @@ namespace BlockWars
                             {
                                 position = new Vector2(x, y);
                                 size = new Vector2(bw, bh);
-                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, 1000);
+                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, strength);
                                 mBoxes.Add(box);
                                 x -= bw;
                             }
@@ -167,7 +170,7 @@ namespace BlockWars
                         {
                             position = new Vector2(x, y);
                             size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, 1000);
+                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, strength);
                             mBoxes.Add(box);
                             x -= bw;
                         }
@@ -177,14 +180,14 @@ namespace BlockWars
                         {
                             position = new Vector2(x, y);
                             size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, 1000);
+                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, strength);
                             mBoxes.Add(box);
                             x -= bw + bw / 2f;
                         }
                         break;
                     }
             }
-        }
+        }*/
 
         protected override void LoadContent()
         {

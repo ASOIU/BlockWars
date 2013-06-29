@@ -16,9 +16,9 @@ namespace BlockWars.Gameplay
 			}
 		}
 		private static PlayerData mDefault;
-		const int Block1Price = 10;
+		const int Block1Price = 50;
 		const int Block2Price = 100;
-		const int Block3Price = 500;
+		const int Block3Price = 250;
 		static PlayerData()
 		{
 			mDefault = new PlayerData(null);

@@ -18,6 +18,7 @@ namespace BlockWars.Gameplay
         int p1, p2;
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
+        private bool mSwitchPlayer;
         private UIManager mUIManager;
         private Camera mCamera;
         private Player mActivePlayer;
@@ -30,6 +31,7 @@ namespace BlockWars.Gameplay
             Player2 = new Player(EntityCategory.Player2, "Player2");
             mActivePlayer = Player1;
             mUIManager.SetActivePlayer(mActivePlayer);
+            mSwitchPlayer = false;
         }
 
         private void UpdateBlock(List<Box> Boxes)
@@ -49,25 +51,37 @@ namespace BlockWars.Gameplay
 
         public void Update(GameTime gameTime)
         {
-            if (mActivePlayer == Player1)
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Enter))
             {
-                if (Player1.Gun.CurrentMagazine == 0)
+                if (!mSwitchPlayer)
                 {
-                    mUIManager.SetActivePlayer(Player2);
-                    Vector2 pos = Player2.Gun.mPosition;
-                    mCamera.SetPosition(pos);
-                    mActivePlayer = Player2;
+                    mSwitchPlayer = true;
+                    if (mActivePlayer == Player1)
+                    {
+                        if (mSwitchPlayer)
+                        {
+                            mUIManager.SetActivePlayer(Player2);
+                            Vector2 pos = Player2.Gun.mPosition;
+                            mCamera.SetPosition(pos);
+                            mActivePlayer = Player2;
+                        }
+                    }
+                    else if (mActivePlayer == Player2)
+                    {
+                        if (mSwitchPlayer)
+                        {
+                            mUIManager.SetActivePlayer(Player1);
+                            Vector2 pos = Player1.Gun.mPosition;
+                            mCamera.SetPosition(pos);
+                            mActivePlayer = Player1;
+                        }
+                    }
                 }
             }
-            else if (mActivePlayer == Player2)
-            {
-                if (Player2.Gun.CurrentMagazine == 0)
-                {
-                    mUIManager.SetActivePlayer(Player1);
-                    Vector2 pos = Player1.Gun.mPosition;
-                    mCamera.SetPosition(pos);
-                    mActivePlayer = Player1;
-                }
+            else
+            {                
+                mSwitchPlayer = false;
             }
         }
     }
