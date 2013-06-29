@@ -169,7 +169,7 @@ namespace BlockWars.UI
         public void SetActivePlayer(Player player)
         {
             mPlayer = player;
-            mPlayerName = "Player: " + mPlayer.Name;
+            mPlayerName = "Игрок: " + mPlayer.Name;
             mBuilder.SetActivePlayer(player);
         }
 
@@ -234,12 +234,16 @@ namespace BlockWars.UI
             {
                 mControls[i].Draw();
             }
-            string boxLastText = "Resources: " + mBuilder.mPlayer.Resources.GetResources();
+            string boxLastText = "Ресурсы: " + mBuilder.mPlayer.Resources.GetResources();
             Vector2 pos = new Vector2(0, 0);
             mSpriteBatch.DrawString(mFont, boxLastText, pos, Color.Black);
 
             pos = new Vector2(0, 21);
             mSpriteBatch.DrawString(mFont, mPlayerName, pos, Color.Black);
+
+            string info = "Нажмите 'ENTER' для передачи хода";
+            pos = new Vector2(180,0);
+            mSpriteBatch.DrawString(mFont, info, pos, Color.DarkRed);
 
             string cage = mPlayer.Gun.CurrentMagazine + "/" + mPlayer.Gun.mMagazineSize;
             pos = new Vector2(0, 41);
@@ -249,7 +253,7 @@ namespace BlockWars.UI
         public void GameOver(Player player)
         {
             mBuilder.mIsActive = false;
-            string congrats = "Game Over\n" + player.Name + "WIN!";
+            string congrats = "Игра окончена\n" + player.Name + "ПОБЕДИЛ!";
             Vector2 pos = new Vector2(200, 100);
             mSpriteBatch.DrawString(mFont, congrats, pos, Color.Red);
         }
