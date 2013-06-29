@@ -115,16 +115,21 @@ namespace BlockWars
                 position.X = (int)(position.X / grid) * grid;
                 position.Y = (int)(position.Y / grid) * grid;
 
-                mBuildingBox.mBody.Position = position;
+                if (mPlayer.CheckingBorder(position.X, position.Y, mPlayer.PlayerType))
+                {
+                    mBuildingBox.mBody.Position = position;
+                }
+
                 if (mouseState.LeftButton == ButtonState.Pressed &&
                     mLastButtonState == ButtonState.Released)
                 {
-                    
+                    if (mPlayer.CheckingBorder(position.X, position.Y, mPlayer.PlayerType))
 					if (mPlayer.Resources.RemoveResources(CurrentType))
-					{
-						buildingObject = mBuildingBox;
-						CreateBox();
-					}
+                        {
+                            buildingObject = mBuildingBox;
+						    CreateBox();
+                        }
+                    }
                 }
                 mLastButtonState = mouseState.LeftButton;
             }

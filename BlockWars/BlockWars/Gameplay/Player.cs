@@ -14,5 +14,41 @@
             PlayerType = playerType;
 			Resources = new PlayerData();
         }
+
+        public bool CheckingBorder(double x, double y, EntityCategory playerType)
+        {
+            switch (playerType)
+            {
+                case EntityCategory.Player1:
+                    {
+                        if ((x <= 0 && x >= -350)&&(y>=-20 && y<=250))
+                        {
+                            return true;
+                            break;
+                        }
+                        else
+                        {
+                            return false;
+                            break;
+                        }
+                    }
+                case EntityCategory.Player2:
+                    {
+                        if ((x >= 0 && x <= 350)&&(y>=-20 && y<=250))
+                        {
+                            return true;
+                            break;
+                        }
+                        else
+                        {
+                            return false;
+                            break;
+                        }
+                    }
+                default:
+                    return false;
+                    break;
+            }
+        }
     }
 }
