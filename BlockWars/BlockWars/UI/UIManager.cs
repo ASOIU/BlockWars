@@ -56,7 +56,7 @@ namespace BlockWars.UI
             }
         }
 
-        void switcher_Click(object sender, EventArgs e)
+        private void BoxButton_Click(object sender, EventArgs e)
         {
             Switcher block = (Switcher)sender;
 
@@ -180,5 +180,32 @@ namespace BlockWars.UI
             Vector2 pos = new Vector2(200, 100);
             mSpriteBatch.DrawString(mFont, congrats, pos, Color.Red);
         }
+
+        private void gunSwitch_Click(object sender, EventArgs e)
+        {
+            //TODO:
+        }
+
+        private void tab_Click(object sender, EventArgs e)
+        {
+            int tabIndex = mTabs.IndexOf(sender as Switcher);
+            SetTabActive(tabIndex);
+        }
+
+        private void SetTabActive(int tabIndex)
+        {
+            for (int i = 0; i < TAB_COUNT; i++)
+            {
+                for (int j = 0; j < mButtonsPerTab[i].Count; j++)
+                {
+                    mButtonsPerTab[i][j].Visible = false;
+                }
+            }
+            for (int i = 0; i < mButtonsPerTab[tabIndex].Count; i++)
+            {
+                mButtonsPerTab[tabIndex][i].Visible = true;
+            }
+        }
+
     }
 }

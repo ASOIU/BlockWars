@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -21,6 +22,16 @@ namespace BlockWars.UI
             background.Position = new Vector2(0, 360);
             mControls.Add(background);
 
+            Texture2D texture2, texture3;
+            texture = mContentManager.Load<Texture2D>("textures\\UI\\build_switched_on");
+            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\build_switched_off");
+            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\build_active");
+            Switcher BButton = new Switcher(mSpriteBatch, texture, texture2, texture3);
+            BButton.Position = new Vector2(745, 20);
+            BButton.IsSwitchedOn = true;
+            BButton.Click += BButton_BuildClick;
+            mControls.Add(BButton);
+
             CreateTabs();
             CreateBlockTab();
             CreateGunTab();
@@ -34,28 +45,31 @@ namespace BlockWars.UI
 
         private void CreateGunTab()
         {
-            //TODO
+            Texture2D texture;
+            Texture2D texture2;
+            Texture2D texture3;
+            texture = mContentManager.Load<Texture2D>("textures\\UI\\box4_switched_on");
+            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\box4_switched_off");
+            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\box4_active");
+            Switcher gunSwitch = new Switcher(mSpriteBatch, texture, texture2, texture3);
+            gunSwitch.Position = new Vector2(10, 390);
+            gunSwitch.Click += gunSwitch_Click;
+            gunSwitch.IsSwitchedOn = true;
+            mControls.Add(gunSwitch);
+            mButtonsPerTab[1].Add(gunSwitch);
         }
 
         private void CreateTabs()
         {
             Texture2D texture;
             Texture2D texture2, texture3;
-            texture = mContentManager.Load<Texture2D>("textures\\UI\\build_switched_on");
-            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\build_switched_off");
-            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\build_active");
-            Switcher BButton = new Switcher(mSpriteBatch, texture, texture2, texture3);
-            BButton.Position = new Vector2(745, 20);
-            BButton.IsSwitchedOn = true;
-            BButton.Click += BButton_BuildClick;
-            mControls.Add(BButton);
 
             texture = mContentManager.Load<Texture2D>("textures\\UI\\building_switched_on");
             texture2 = mContentManager.Load<Texture2D>("textures\\UI\\building_switched_off");
             texture3 = mContentManager.Load<Texture2D>("textures\\UI\\building_active");
             Switcher tab = new Switcher(mSpriteBatch, texture, texture2, texture3);
             tab.Position = new Vector2(5, 365);
-            tab.Click += switcher_Click;
+            tab.Click += tab_Click;
             tab.IsSwitchedOn = true;
             mControls.Add(tab);
             mTabs.Add(tab);
@@ -65,7 +79,7 @@ namespace BlockWars.UI
             texture3 = mContentManager.Load<Texture2D>("textures\\UI\\weapon_active");
             tab = new Switcher(mSpriteBatch, texture, texture2, texture3);
             tab.Position = new Vector2(66, 364);
-            tab.Click += switcher_Click;
+            tab.Click += tab_Click;
             mControls.Add(tab);
             mTabs.Add(tab);
 
@@ -74,13 +88,14 @@ namespace BlockWars.UI
             texture3 = mContentManager.Load<Texture2D>("textures\\UI\\extra_active");
             tab = new Switcher(mSpriteBatch, texture, texture2, texture3);
             tab.Position = new Vector2(132, 364);
-            tab.Click += switcher_Click;
+            tab.Click += tab_Click;
             mControls.Add(tab);
             mTabs.Add(tab);
         }
 
         private void CreateBlockTab()
         {
+            int tabIndex = 0;
             Texture2D texture;
             Texture2D texture2;
             Texture2D texture3;
@@ -89,28 +104,28 @@ namespace BlockWars.UI
             texture3 = mContentManager.Load<Texture2D>("textures\\UI\\box4_active");
             Switcher block = new Switcher(mSpriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(10, 390);
-            block.Click += switcher_Click;
+            block.Click += BoxButton_Click;
             block.IsSwitchedOn = true;
             mControls.Add(block);
-            mButtonsPerTab[0].Add(block);
+            mButtonsPerTab[tabIndex].Add(block);
 
             texture = mContentManager.Load<Texture2D>("textures\\UI\\box3_switched_on");
             texture2 = mContentManager.Load<Texture2D>("textures\\UI\\box3_switched_off");
             texture3 = mContentManager.Load<Texture2D>("textures\\UI\\box3_active");
             block = new Switcher(mSpriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(95, 390);
-            block.Click += switcher_Click;
+            block.Click += BoxButton_Click;
             mControls.Add(block);
-            mButtonsPerTab[0].Add(block);
+            mButtonsPerTab[tabIndex].Add(block);
 
             texture = mContentManager.Load<Texture2D>("textures\\UI\\box2_switched_on");
             texture2 = mContentManager.Load<Texture2D>("textures\\UI\\box2_switched_off");
             texture3 = mContentManager.Load<Texture2D>("textures\\UI\\box2_active");
             block = new Switcher(mSpriteBatch, texture, texture2, texture3);
             block.Position = new Vector2(180, 390);
-            block.Click += switcher_Click;
+            block.Click += BoxButton_Click;
             mControls.Add(block);
-            mButtonsPerTab[0].Add(block);
+            mButtonsPerTab[tabIndex].Add(block);
         }
     }
 }
