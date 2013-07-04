@@ -51,7 +51,7 @@ namespace BlockWars.Gameplay
         {
             if (mActivePlayer == Player1)
             {
-                if (Player1.Gun.CurrentMagazine == 0)
+                if (Player1.Gun.CurrentMagazine.Count == 0)
                 {
                     mUIManager.SetActivePlayer(Player2);
                     Vector2 pos = Player2.Gun.mPosition;
@@ -61,7 +61,7 @@ namespace BlockWars.Gameplay
             }
             else if (mActivePlayer == Player2)
             {
-                if (Player2.Gun.CurrentMagazine == 0)
+                if (Player2.Gun.CurrentMagazine.Count == 0)
                 {
                     mUIManager.SetActivePlayer(Player1);
                     Vector2 pos = Player1.Gun.mPosition;

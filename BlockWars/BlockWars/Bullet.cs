@@ -27,11 +27,19 @@ namespace BlockWars
 
         public Player mPlayer;
 
-        public Bullet(World world, Vector2 position, float damageRadius, float maxDamageValue, Player player)
+        public Bullet(World world, Vector2 position, float maxDamageValue, Player player,int bulletType)
         {
             mPlayer = player;
             ObjectType = EObjectType.Bullet;
-            mDamageRadius = damageRadius;
+			switch (bulletType)
+			{
+				case 1:
+					mDamageRadius = 10;
+					break;
+				case 2:
+					mDamageRadius = 20;
+					break;
+			}
             mMaxDamageValue = maxDamageValue;
             Vector2 size = new Vector2(5, 5);
             mBox = new Box(world, position, size, "bullet", true, player);

@@ -240,8 +240,53 @@ namespace BlockWars.UI
 
             pos = new Vector2(0, 21);
             mSpriteBatch.DrawString(mFont, mPlayerName, pos, Color.Black);
-
-            string cage = mPlayer.Gun.CurrentMagazine + "/" + mPlayer.Gun.mMagazineSize;
+			string cage = "Current magazine: [";
+			for (int i = 0; i < mPlayer.Gun.CurrentMagazine.Count; i++)
+			{
+				string bullet = "";
+				switch (mPlayer.Gun.CurrentMagazine[i])
+				{
+					case 1:
+						bullet = "N";
+						break;
+					case 2:
+						bullet = "A";
+						break;
+					default:
+						bullet = "U";
+						break;
+				}
+				if (i < mPlayer.Gun.mMagazineSize-1)
+				{
+					cage += bullet + "|";
+				}
+				else
+				{
+					cage += bullet;
+				}
+				
+			}
+			if (mPlayer.Gun.CurrentMagazine.Count<mPlayer.Gun.mMagazineSize)
+			{
+				for (int i = 0; i < mPlayer.Gun.mMagazineSize-mPlayer.Gun.CurrentMagazine.Count; i++)
+				{
+					if (i < mPlayer.Gun.mMagazineSize-mPlayer.Gun.CurrentMagazine.Count-1)
+				{
+					cage += "-" + "|";
+				}
+				else
+				{
+					cage += "-";
+				}
+				}
+			}
+			cage += "]";
+			
+			if (mPlayer.Gun.CurrentMagazine.Count>0)
+			{
+				 
+			}
+			
             pos = new Vector2(0, 41);
             mSpriteBatch.DrawString(mFont, cage, pos, Color.Black);
         }

@@ -31,15 +31,14 @@ namespace BlockWars
             set
             {
                 mIsActive = value;
-                CurrentMagazine = mMagazineSize;
             }
         }
 
         private bool mIsActive;
 
-        public int mMagazineSize = 3;
+        public int mMagazineSize = 4;
 
-        public int CurrentMagazine
+        public List<int> CurrentMagazine
         {
             get;
             set;
@@ -54,6 +53,9 @@ namespace BlockWars
             mPosition = position;
             mWorld = world;
             mPlayer = player;
+			CurrentMagazine = new List<int>();
+			AddBulletToMagazine(1);
+			AddBulletToMagazine(1);
 
             Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
@@ -77,7 +79,6 @@ namespace BlockWars
             else
                 mFilter.maskBits = (ushort)(EntityCategory.Player2);
             mFilter.categoryBits = (ushort)mPlayer.PlayerType;
-            CurrentMagazine = mMagazineSize;
         }
 
         public override Vector2 GetPosition()
@@ -96,7 +97,16 @@ namespace BlockWars
             mBaseBox.Draw(primitiveRender);
             mBarrelBox.Draw(primitiveRender);
         }
-
+		public bool AddBulletToMagazine(int bulletType)
+		{
+			if (CurrentMagazine.Count==mMagazineSize)
+			{
+				return false;
+			}
+			CurrentMagazine.Add(bulletType);
+			return true;
+		}
+		
         public Bullet Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
@@ -112,17 +122,17 @@ namespace BlockWars
                 angle -= da;
             }
             Bullet bullet = null;
-            if (state.IsKeyDown(Keys.Space) && (CurrentMagazine != 0))
+            if (state.IsKeyDown(Keys.Space) && (CurrentMagazine.Count != 0))
             {
                 if (!mShotDone && IsActive)
                 {
-                    bullet = new Bullet(mWorld, mPosition, 10, 200, mPlayer);
+                    bullet = new Bullet(mWorld, mPosition, 200, mPlayer,CurrentMagazine[0]);
                     var fixture = bullet.Body.GetFixtureList();
                     fixture.SetFilterData(ref mFilter);
 
                     bullet.Shot(angle, 1000);
                     mShotDone = true;
-                    CurrentMagazine--;
+					CurrentMagazine.RemoveAt(0); ;
                 }
             }
             else
@@ -130,7 +140,7 @@ namespace BlockWars
                 mShotDone = false;
             }
 
-            if (CurrentMagazine == 0)
+            if (CurrentMagazine.Count == 0)
             {
                 mIsActive = false;
             }
