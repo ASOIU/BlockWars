@@ -19,6 +19,8 @@ namespace BlockWars.Gameplay
 		const int Block1Price = 10;
 		const int Block2Price = 100;
 		const int Block3Price = 500;
+        const int GunPrice = 1000;
+        const int BulletAPrice = 200;
         const int BlockDestroyPercent = 10;
         int ResourcesForTurn = 200;
         public void AddResourcesForTurn()
@@ -56,6 +58,12 @@ namespace BlockWars.Gameplay
 				case ObjectType.Block3:
 					CurrentResources -= Block3Price;
 					break;
+                case ObjectType.Gun:
+                    CurrentResources -= GunPrice;
+					break;
+                case ObjectType.BulletA:
+                    CurrentResources -= BulletAPrice;
+                    break;
 			}
 			return true;
 		}
@@ -81,6 +89,18 @@ namespace BlockWars.Gameplay
 						return true;
 					}
 					break;
+                case ObjectType.Gun:
+                    if (CurrentResources >= GunPrice)
+                    {
+                        return true;
+                    }
+                    break;
+                case ObjectType.BulletA:
+                    if (CurrentResources >= BulletAPrice)
+                    {
+                        return true;
+                    }
+                    break;
 			}
 			return false;
 		}
@@ -92,7 +112,9 @@ namespace BlockWars.Gameplay
 		{
 			Block1,
 			Block2,
-			Block3
+			Block3,
+            Gun,
+            BulletA
 		}
 	}
 }
