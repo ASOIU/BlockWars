@@ -22,6 +22,7 @@ namespace BlockWars.Gameplay
         private UIManager mUIManager;
         private Camera mCamera;
         private Player mActivePlayer;
+        bool mFirstTurns = true;
 
         public Gameplay(Camera camera, UIManager uiManager)
         {
@@ -64,6 +65,10 @@ namespace BlockWars.Gameplay
                         if (mSwitchPlayer)
                         {
                             mUIManager.SetActivePlayer(Player2);
+                            if (!mFirstTurns)
+                            {
+                                Player2.Resources.AddResourcesForTurn(); 
+                            }
                             Vector2 pos = Player2.Gun.mPosition;
                             mCamera.SetPosition(pos);
                             mActivePlayer = Player2;
@@ -73,10 +78,16 @@ namespace BlockWars.Gameplay
                     {
                         if (mSwitchPlayer)
                         {
+                            mFirstTurns = false;
                             mUIManager.SetActivePlayer(Player1);
+                            if (!mFirstTurns)
+                            {
+                                Player1.Resources.AddResourcesForTurn(); 
+                            }
                             Vector2 pos = Player1.Gun.mPosition;
                             mCamera.SetPosition(pos);
                             mActivePlayer = Player1;
+                            
                         }
                     }
                 }

@@ -20,6 +20,11 @@ namespace BlockWars.Gameplay
 		const int Block2Price = 100;
 		const int Block3Price = 500;
         const int BlockDestroyPercent = 10;
+        int ResourcesForTurn = 200;
+        public void AddResourcesForTurn()
+        {
+            CurrentResources += ResourcesForTurn;
+        }
 		static PlayerData()
 		{
 			mDefault = new PlayerData(null);
