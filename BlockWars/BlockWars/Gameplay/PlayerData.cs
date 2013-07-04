@@ -16,9 +16,10 @@ namespace BlockWars.Gameplay
 			}
 		}
 		private static PlayerData mDefault;
-		const int Block1Price = 50;
+		const int Block1Price = 10;
 		const int Block2Price = 100;
-		const int Block3Price = 250;
+		const int Block3Price = 500;
+        const int BlockDestroyPercent = 10;
 		static PlayerData()
 		{
 			mDefault = new PlayerData(null);
@@ -78,17 +79,15 @@ namespace BlockWars.Gameplay
 			}
 			return false;
 		}
-		
+        public void AddResourcesBlockDestroy(int startHealth)
+        {
+            CurrentResources += startHealth * BlockDestroyPercent / 100;
+        }
 		public enum ObjectType
 		{
 			Block1,
 			Block2,
 			Block3
 		}
-
-	    public void AddResourcesBlockDestroy(int startHealth)
-	    {
-            //TODO:
-	    }
 	}
 }
