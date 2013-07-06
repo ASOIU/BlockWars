@@ -56,6 +56,27 @@ namespace BlockWars.UI
             }
         }
 
+        private void gunSwitch_Click(object sender, EventArgs e)
+        {
+            Switcher gun = (Switcher)sender;
+            if (gun.IsSwitchedOn)
+            {
+                List<Switcher> gunButtons = mButtonsPerTab[1];
+                for (int i = 0; i < gunButtons.Count; i++)
+                {
+                    if (gunButtons[i] != gun)
+                    {
+                        gunButtons[i].IsSwitchedOn = false;
+                        mBuilder.SetBuildingObjectType((PlayerData.ObjectType)gunButtons.IndexOf(gun));
+                    }
+                }
+            }
+            else
+            {
+                gun.IsSwitchedOn = true;
+            }
+        }
+
         private void BoxButton_Click(object sender, EventArgs e)
         {
             Switcher block = (Switcher)sender;
@@ -68,7 +89,7 @@ namespace BlockWars.UI
                     if (blockButtons[i] != block)
                     {
                         blockButtons[i].IsSwitchedOn = false;
-                        mBuilder.BuildingBlock((PlayerData.ObjectType)blockButtons.IndexOf(block));
+                        mBuilder.SetBuildingObjectType((PlayerData.ObjectType)blockButtons.IndexOf(block));
                     }
                 }
             }
@@ -173,20 +194,20 @@ namespace BlockWars.UI
             pos = new Vector2(180,0);
             mSpriteBatch.DrawString(mFont, info, pos, Color.DarkRed);
 
-			string cage = "Current magazine: [";
+			string cage = "Обойма: [";
 			for (int i = 0; i < mPlayer.Gun.CurrentMagazine.Count; i++)
 			{
 				string bullet = "";
 				switch (mPlayer.Gun.CurrentMagazine[i])
 				{
 					case 1:
-						bullet = "N";
+						bullet = "О";
 						break;
 					case 2:
-						bullet = "A";
+						bullet = "Б";
 						break;
 					default:
-						bullet = "U";
+						bullet = "Н";
 						break;
 				}
 				if (i < mPlayer.Gun.mMagazineSize-1)
@@ -230,11 +251,6 @@ namespace BlockWars.UI
             string congrats = "Игра окончена\n" + player.Name + "ПОБЕДИЛ!";
             Vector2 pos = new Vector2(200, 100);
             mSpriteBatch.DrawString(mFont, congrats, pos, Color.Red);
-        }
-
-        private void gunSwitch_Click(object sender, EventArgs e)
-        {
-            //TODO:
         }
 
         private void tab_Click(object sender, EventArgs e)

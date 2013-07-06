@@ -61,7 +61,7 @@ namespace BlockWars
             Body.Position = position;
         }
 
-        public void Draw(PrimitiveRender primitiveRender)
+        public override void Draw(PrimitiveRender primitiveRender)
         {
             if (mIsActive)
             {
@@ -82,7 +82,7 @@ namespace BlockWars
             mIsActive = true;
         }
 
-        public void Destroy()
+        public override void Destroy()
         {
             if (!mIsDestoyed)
             {

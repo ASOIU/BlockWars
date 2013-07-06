@@ -22,6 +22,8 @@ namespace BlockWars
 
         private bool mShotDone;
 
+        private bool mIsDestroyed;
+
         public bool IsActive
         {
             get
@@ -36,7 +38,7 @@ namespace BlockWars
 
         private bool mIsActive;
 
-        public int mMagazineSize = 4;
+        public int mMagazineSize = 5;
 
         public List<int> CurrentMagazine
         {
@@ -54,8 +56,10 @@ namespace BlockWars
             mWorld = world;
             mPlayer = player;
             CurrentMagazine = new List<int>();
-            AddBulletToMagazine(1);
-            AddBulletToMagazine(1);
+            for (int i = 0; i < 3; i++)
+            {
+                AddBulletToMagazine(1);
+            }
 
             Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
@@ -92,11 +96,24 @@ namespace BlockWars
             mBarrelBox.mBody.Position = position;
         }
 
-        public void Draw(PrimitiveRender primitiveRender)
+        public override void Draw(PrimitiveRender primitiveRender)
         {
             mBaseBox.Draw(primitiveRender);
             mBarrelBox.Draw(primitiveRender);
         }
+
+        public override void Destroy()
+        {
+            if (!mIsDestroyed)
+            {
+                mIsDestroyed = true;
+                mWorld.DestroyBody(mBaseBox.mBody);
+                mBaseBox.mBody = null;
+                mWorld.DestroyBody(mBarrelBox.mBody);
+                mBarrelBox.mBody = null;
+            }
+        }
+
         public bool AddBulletToMagazine(int bulletType)
         {
             if (CurrentMagazine.Count == mMagazineSize)
