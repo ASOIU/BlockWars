@@ -37,6 +37,7 @@ namespace BlockWars
             mIsActive = false;
             mCamera = camera;
             mTexture = "block3";
+            SetBuildingObjectType(PlayerData.ObjectType.Block1);
         }
 
         public void SetActivePlayer(Player player)
@@ -44,7 +45,7 @@ namespace BlockWars
             mPlayer = player;
         }
 
-        public void BuildingBlock(PlayerData.ObjectType blockType)
+        public void SetBuildingObjectType(PlayerData.ObjectType blockType)
         {
             CurrentType = blockType;
             switch (blockType)
