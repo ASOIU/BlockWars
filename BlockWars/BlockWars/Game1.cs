@@ -22,16 +22,14 @@ namespace BlockWars
         private PrimitiveRender mPrimitiveRender;
         private BasicEffect mBasicEffect;
         private World mWorld;
-        private List<Box> mBoxes;
-        private List<Bullet> mBullets;
-        private List<Gun> mGuns;
         private ContactListener mContactListener;
         private Builder mBuilder;
         private Camera mCamera;
         private UIManager mUiManager;
         private Player mPlayer;
         private Gameplay.Gameplay mGameplay;
-        private Gameplay.CreateBase mCreateBase; 
+        private Gameplay.CreateBase mCreateBase;
+        private GameObjectCollection mGameObjectCollection;
 
         private List<Box> mImmortalBoxes;
 
@@ -43,10 +41,9 @@ namespace BlockWars
 
         protected override void Initialize()
         {
+            mGameObjectCollection = new GameObjectCollection();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mImmortalBoxes = new List<Box>();
-            mBullets = new List<Bullet>();
-            mGuns = new List<Gun>();
             mBasicEffect = new BasicEffect(graphics.GraphicsDevice);
             mBasicEffect.VertexColorEnabled = true;
             mCamera = new Camera(GraphicsDevice.Viewport, mBasicEffect);
@@ -67,7 +64,6 @@ namespace BlockWars
 
             Vector2 pos = new Vector2(0, 30);
             Vector2 size = new Vector2(2, 2);
-            mBoxes = new List<Box>();
 
             pos = new Vector2(0, -20);
             size = new Vector2(10000, 1);
@@ -76,118 +72,20 @@ namespace BlockWars
 
             pos = new Vector2(-150, -7);
             Gun gunPlayer1 = new Gun(mWorld, pos, mPlayer);
-            mGuns.Add(gunPlayer1);
+            mGameObjectCollection.Guns.Add(gunPlayer1);
             mPlayer.Gun = gunPlayer1;
 
             pos = new Vector2(140, -7);
             Gun gunPlayer2 = new Gun(mWorld, pos, mGameplay.Player2);
-            mGuns.Add(gunPlayer2);
+            mGameObjectCollection.Guns.Add(gunPlayer2);
             mGameplay.Player2.Gun = gunPlayer2;
 
-            mBoxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player1));
-            mBoxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player2));
+            mGameObjectCollection.Boxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player1));
+            mGameObjectCollection.Boxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player2));
 
             mBuilder.Activate();
             base.Initialize();
         }
-
-        /*private void CreateBuilding(Gameplay.EntityCategory playerType)
-        {
-            int strength = 1000;
-            switch (playerType)
-            {
-                case(EntityCategory.Player1):
-                    {
-                        float x, y;
-                        y = -18f;
-                        float bw, bh;
-                        bw = 6;
-                        bh = 3;
-                        Vector2 position;
-                        Vector2 size;
-                        Box box;
-                        for (int i = 0; i < 8; i++)
-                        {
-                            x = -300;
-                            for (int j = 0; j < 3; j++)
-                            {
-                                position = new Vector2(x, y);
-                                size = new Vector2(bw, bh);
-                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, strength);
-                                mBoxes.Add(box);
-                                x -= bw;
-                            }
-                            y += bh;
-                        } 
-                        x = -297;
-                        y = 5.8f;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, strength);
-                            mBoxes.Add(box);
-                            x -= bw;
-                        }
-                        x = -297;
-                        y = 8.8f;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player1, strength);
-                            mBoxes.Add(box);
-                            x -= bw+bw/2f;
-                        }
-                        break;
-                    }
-                case (EntityCategory.Player2):
-                    {
-                        float x, y;
-                        y = -18f;
-                        float bw, bh;
-                        bw = 6;
-                        bh = 3;
-                        Vector2 position;
-                        Vector2 size;
-                        Box box;
-                        for (int i = 0; i < 8; i++)
-                        {
-                            x = 300;
-                            for (int j = 0; j < 3; j++)
-                            {
-                                position = new Vector2(x, y);
-                                size = new Vector2(bw, bh);
-                                box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, strength);
-                                mBoxes.Add(box);
-                                x -= bw;
-                            }
-                            y += bh;
-                        }
-                        x = 303;
-                        y = 5.8f;
-                        for (int i = 0; i < 4; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, strength);
-                            mBoxes.Add(box);
-                            x -= bw;
-                        }
-                        x = 303;
-                        y = 8.8f;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            position = new Vector2(x, y);
-                            size = new Vector2(bw, bh);
-                            box = new Box(mWorld, position, size, "base-block", true, mGameplay.Player2, strength);
-                            mBoxes.Add(box);
-                            x -= bw + bw / 2f;
-                        }
-                        break;
-                    }
-            }
-        }*/
 
         protected override void LoadContent()
         {
@@ -198,12 +96,13 @@ namespace BlockWars
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            for (int i = 0; i < mGuns.Count; i++)
+            List<Gun> guns = mGameObjectCollection.Guns;
+            for (int i = 0; i < guns.Count; i++)
             {
-                Bullet bullet = mGuns[i].Update(gameTime);
+                Bullet bullet = guns[i].Update(gameTime);
                 if (bullet != null)
                 {
-                    mBullets.Add(bullet);
+                    mGameObjectCollection.Bullets.Add(bullet);
                 }
             }
 
@@ -211,12 +110,12 @@ namespace BlockWars
             mWorld.Step(timeStep, 6, 2);
 
             List<Box> newBoxes = ProcessCollisions();
-            mBoxes.AddRange(newBoxes);
+            mGameObjectCollection.Boxes.AddRange(newBoxes);
 
             object obj = mBuilder.Update(gameTime);
             if (obj is Box)
             {
-                mBoxes.Add((Box)obj);
+                mGameObjectCollection.Boxes.Add((Box)obj);
             }
             mCamera.Update(gameTime);
 
@@ -257,9 +156,10 @@ namespace BlockWars
             for (int i = 0; i < contactBullets.Count; i++)
             {
                 Bullet bullet = contactBullets[i];
-                for (int j = 0; j < mBoxes.Count; j++)
+                List<Box> boxes = mGameObjectCollection.Boxes;
+                for (int j = 0; j < boxes.Count; j++)
                 {
-                    Box box = mBoxes[j];
+                    Box box = boxes[j];
                     Vector2 distance = bullet.Body.Position - box.mBody.Position;
                     float explosionDistance = distance.Length();
                     float damage = bullet.GetDamageValue(explosionDistance);
@@ -270,12 +170,12 @@ namespace BlockWars
                         bullet.mPlayer.Resources.AddResourcesBlockDestroy((int)box.mStartHealth);
                         newBoxes.AddRange(boxs);
                         box.Destroy();
-                        mBoxes.Remove(box);
+                        boxes.Remove(box);
                         j--;
                     }
                 }
                 bullet.Destroy();
-                mBullets.Remove(bullet);
+                mGameObjectCollection.Bullets.Remove(bullet);
             }
             return newBoxes;
         }
@@ -292,22 +192,26 @@ namespace BlockWars
             mPrimitiveRender.BeginDraw();
             //spriteBatch.Begin();
 
-            for (int i = 0; i < mBoxes.Count; i++)
+            List<Box> boxes = mGameObjectCollection.Boxes;
+            for (int i = 0; i < boxes.Count; i++)
             {
-                mBoxes[i].Draw(mPrimitiveRender);
+                boxes[i].Draw(mPrimitiveRender);
             }
             for (int i = 0; i < mImmortalBoxes.Count; i++)
             {
                 mImmortalBoxes[i].Draw(mPrimitiveRender);
             }
-            for (int i = 0; i < mBullets.Count; i++)
+
+            List<Bullet> bullets = mGameObjectCollection.Bullets;
+            for (int i = 0; i < bullets.Count; i++)
             {
-                mBullets[i].Draw(mPrimitiveRender);
+                bullets[i].Draw(mPrimitiveRender);
             }
 
-            for (int i = 0; i < mGuns.Count; i++)
+            List<Gun> guns = mGameObjectCollection.Guns;
+            for (int i = 0; i < guns.Count; i++)
             {
-                mGuns[i].Draw(mPrimitiveRender);
+                guns[i].Draw(mPrimitiveRender);
             }
             mBuilder.Draw(mPrimitiveRender, spriteBatch);
 

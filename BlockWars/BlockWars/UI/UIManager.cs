@@ -68,7 +68,7 @@ namespace BlockWars.UI
                     if (blockButtons[i] != block)
                     {
                         blockButtons[i].IsSwitchedOn = false;
-                        mBuilder.BuildingBlock((PlayerData.ObjectType)blockButtons.IndexOf(block));
+                        mBuilder.SetBuildingObjectType((PlayerData.ObjectType)blockButtons.IndexOf(block));
                     }
                 }
             }

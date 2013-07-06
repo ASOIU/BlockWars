@@ -72,7 +72,7 @@ namespace BlockWars
                     break;
             }
         }
-
+        
         public void Activate()
         {
             if (!mIsActive)
