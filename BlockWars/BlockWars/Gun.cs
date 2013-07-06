@@ -53,9 +53,9 @@ namespace BlockWars
             mPosition = position;
             mWorld = world;
             mPlayer = player;
-			CurrentMagazine = new List<int>();
-			AddBulletToMagazine(1);
-			AddBulletToMagazine(1);
+            CurrentMagazine = new List<int>();
+            AddBulletToMagazine(1);
+            AddBulletToMagazine(1);
 
             Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
@@ -97,18 +97,22 @@ namespace BlockWars
             mBaseBox.Draw(primitiveRender);
             mBarrelBox.Draw(primitiveRender);
         }
-		public bool AddBulletToMagazine(int bulletType)
-		{
-			if (CurrentMagazine.Count==mMagazineSize)
-			{
-				return false;
-			}
-			CurrentMagazine.Add(bulletType);
-			return true;
-		}
-		
+        public bool AddBulletToMagazine(int bulletType)
+        {
+            if (CurrentMagazine.Count == mMagazineSize)
+            {
+                return false;
+            }
+            CurrentMagazine.Add(bulletType);
+            return true;
+        }
+
         public Bullet Update(GameTime gameTime)
         {
+            if (!IsActive)
+            {
+                return null;
+            }
             KeyboardState state = Keyboard.GetState();
             Vector2 pos = mBarrelBox.mBody.GetPosition();
             float angle = mBarrelBox.mBody.GetAngle();
@@ -126,13 +130,13 @@ namespace BlockWars
             {
                 if (!mShotDone && IsActive)
                 {
-                    bullet = new Bullet(mWorld, mPosition, 200, mPlayer,CurrentMagazine[0]);
+                    bullet = new Bullet(mWorld, mPosition, 200, mPlayer, CurrentMagazine[0]);
                     var fixture = bullet.Body.GetFixtureList();
                     fixture.SetFilterData(ref mFilter);
 
                     bullet.Shot(angle, 1000);
                     mShotDone = true;
-					CurrentMagazine.RemoveAt(0); ;
+                    CurrentMagazine.RemoveAt(0); ;
                 }
             }
             else
