@@ -86,7 +86,7 @@ namespace BlockWars
             mBody.Position = position;
         }
 
-        public void Draw(PrimitiveRender primitiveRender)
+        public override void Draw(PrimitiveRender primitiveRender)
         {
             if (!mIsDestroyed)
             {
@@ -97,7 +97,7 @@ namespace BlockWars
             }
         }
 
-        public void Destroy()
+        public override void Destroy()
         {
             if (!mIsDestroyed)
             {

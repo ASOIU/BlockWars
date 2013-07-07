@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Box2D.XNA;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace BlockWars
 
 
         public abstract void SetPosition(Vector2 position);
+
+        public abstract void Destroy();
+
+        public abstract void Draw(PrimitiveRender primitiveRender);
     }
 
 }
