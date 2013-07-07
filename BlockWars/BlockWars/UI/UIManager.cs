@@ -12,10 +12,10 @@ namespace BlockWars.UI
 {
     partial class UIManager
     {
-        private const int TAB_COUNT = 3;
+        private const int TAB_COUNT = 4;
 
         private List<UIControl> mControls;
-        private List<Switcher>[] mButtonsPerTab;
+        private List<UIControl>[] mButtonsPerTab;
         private List<Switcher> mTabs;
         private Builder mBuilder;
         private Cursor mCursor;
@@ -40,19 +40,16 @@ namespace BlockWars.UI
 
         void BButton_BuildClick(object sender, EventArgs e)
         {
-            Switcher BButton = (Switcher)sender;
+            Button BButton = (Button)sender;
+			mBuildMode = false;
             for (int i = 0; i < mControls.Count; i++)
             {
-                bool isUiVisible = BButton.IsSwitchedOn;
-                if (mControls[i] != BButton)
-                {
-                    mControls[i].Visible = isUiVisible;
-                    mBuildMode = isUiVisible;
+                    mControls[i].Visible = false;
                     if (mPlayer.Gun != null)
                     {
-                        mPlayer.Gun.IsActive = !isUiVisible;
+                        mPlayer.Gun.IsActive = true;
                     }
-                }
+                
             }
         }
 
@@ -62,12 +59,12 @@ namespace BlockWars.UI
 
             if (block.IsSwitchedOn)
             {
-                List<Switcher> blockButtons = mButtonsPerTab[0];
+                List<UIControl> blockButtons = mButtonsPerTab[0];
                 for (int i = 0; i < blockButtons.Count; i++)
                 {
                     if (blockButtons[i] != block)
                     {
-                        blockButtons[i].IsSwitchedOn = false;
+                        ((Switcher)blockButtons[i]).IsSwitchedOn = false;
                         mBuilder.BuildingBlock((PlayerData.ObjectType)blockButtons.IndexOf(block));
                     }
                 }
@@ -98,6 +95,19 @@ namespace BlockWars.UI
             mPlayer = player;
             mPlayerName = "Игрок: " + mPlayer.Name;
             mBuilder.SetActivePlayer(player);
+			mBuildMode = true;
+			for (int i = 0; i < mControls.Count; i++)
+			{
+				mControls[i].Visible = true;
+			}
+			for (int i = 0; i < TAB_COUNT; i++)
+			{
+				for (int j = 0; j < mButtonsPerTab[i].Count; j++)
+				{
+					mButtonsPerTab[i][j].Visible = false;
+				}
+			}
+			SetTabActive(0);
         }
 
         public void Update(GameTime gameTime)
@@ -236,6 +246,22 @@ namespace BlockWars.UI
         {
             //TODO:
         }
+
+		private void bullet_Click(object sender, EventArgs e)
+		{
+			mPlayer.Gun.AddBulletToMagazine(1);
+		}
+
+		private void bulletA_Click(object sender, EventArgs e)
+		{
+			if(mPlayer.Resources.CheckResourceAvaliabe(PlayerData.ObjectType.BulletA))
+			{
+				if (mPlayer.Gun.AddBulletToMagazine(2))
+				{
+					mPlayer.Resources.RemoveResources(PlayerData.ObjectType.BulletA);
+				}
+			}
+		}
 
         private void tab_Click(object sender, EventArgs e)
         {
