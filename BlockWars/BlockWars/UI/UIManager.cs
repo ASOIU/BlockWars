@@ -12,7 +12,7 @@ namespace BlockWars.UI
 {
     partial class UIManager
     {
-        private const int TAB_COUNT = 4;
+        private const int TAB_COUNT = 5;
 
         private List<UIControl> mControls;
         private List<UIControl>[] mButtonsPerTab;
@@ -220,7 +220,7 @@ namespace BlockWars.UI
 						bullet = "Н";
 						break;
 				}
-				if (i < mPlayer.Gun.mMagazineSize-1)
+				if (i < mPlayer.Resources.GunMagazineSize-1)
 				{
 					cage += bullet + "|";
 				}
@@ -230,11 +230,11 @@ namespace BlockWars.UI
 				}
 				
 			}
-			if (mPlayer.Gun.CurrentMagazine.Count<mPlayer.Gun.mMagazineSize)
+			if (mPlayer.Gun.CurrentMagazine.Count<mPlayer.Resources.GunMagazineSize)
 			{
-				for (int i = 0; i < mPlayer.Gun.mMagazineSize-mPlayer.Gun.CurrentMagazine.Count; i++)
+				for (int i = 0; i < mPlayer.Resources.GunMagazineSize-mPlayer.Gun.CurrentMagazine.Count; i++)
 				{
-					if (i < mPlayer.Gun.mMagazineSize-mPlayer.Gun.CurrentMagazine.Count-1)
+					if (i < mPlayer.Resources.GunMagazineSize-mPlayer.Gun.CurrentMagazine.Count-1)
 				{
 					cage += "-" + "|";
 				}
@@ -246,13 +246,15 @@ namespace BlockWars.UI
 			}
 			cage += "]";
 			
-			if (mPlayer.Gun.CurrentMagazine.Count>0)
-			{
-				 
-			}
-			
             pos = new Vector2(0, 41);
             mSpriteBatch.DrawString(mFont, cage, pos, Color.Black);
+
+            int[] Upgrades = mPlayer.Resources.GetUpgradeLevels();
+            for (int i = 0; i < Upgrades.Length; i++)
+            {
+                pos = new Vector2(0, 61+i*20);
+                mSpriteBatch.DrawString(mFont, string.Format("Upgrade{0} level: {1}",i+1,Upgrades[i]), pos, Color.Black);
+            }
         }
 
         public void GameOver(Player player)
@@ -278,6 +280,12 @@ namespace BlockWars.UI
 				}
 			}
 		}
+
+        private void Upgrade_Click(object sender, EventArgs e)
+        {
+            int c = mButtonsPerTab[4].IndexOf((Button)sender);
+            mPlayer.Resources.BuyUpgrade(c);
+        }
 
         private void tab_Click(object sender, EventArgs e)
         {

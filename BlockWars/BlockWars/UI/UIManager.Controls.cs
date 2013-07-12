@@ -34,6 +34,7 @@ namespace BlockWars.UI
 			CreateBlockTab();
 			CreateGunTab();
 			CreateBulletTab();
+            CreateUpgradesTab();
 
 			for (int i = 0; i < TAB_COUNT; i++)
 			{
@@ -87,6 +88,34 @@ namespace BlockWars.UI
 			mButtonsPerTab[3].Add(bulletSwitch);
 		}
 
+        void CreateUpgradesTab()
+        {
+            Texture2D texture2;
+            Texture2D texture3;
+            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\block1_switched_off");
+            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\block1_active");
+            Button bulletSwitch = new Button(mSpriteBatch, texture2, texture3);
+            bulletSwitch.Position = new Vector2(10, 390);
+            bulletSwitch.Click += Upgrade_Click;
+            mControls.Add(bulletSwitch);
+            mButtonsPerTab[4].Add(bulletSwitch);
+
+            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\block1_switched_off");
+            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\block1_active");
+            bulletSwitch = new Button(mSpriteBatch, texture2, texture3);
+            bulletSwitch.Position = new Vector2(100, 390);
+            bulletSwitch.Click += Upgrade_Click;
+            mControls.Add(bulletSwitch);
+            mButtonsPerTab[4].Add(bulletSwitch);
+
+            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\block1_switched_off");
+            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\block1_active");
+            bulletSwitch = new Button(mSpriteBatch, texture2, texture3);
+            bulletSwitch.Position = new Vector2(200, 390);
+            bulletSwitch.Click += Upgrade_Click;
+            mControls.Add(bulletSwitch);
+            mButtonsPerTab[4].Add(bulletSwitch);
+        }
 		private void CreateTabs()
 		{
 			Texture2D texture;
@@ -128,6 +157,15 @@ namespace BlockWars.UI
 			tab.Click += tab_Click;
 			mControls.Add(tab);
 			mTabs.Add(tab);
+
+            texture = mContentManager.Load<Texture2D>("textures\\UI\\Upgrades_tab");
+            texture2 = mContentManager.Load<Texture2D>("textures\\UI\\Upgrades_tab");
+            texture3 = mContentManager.Load<Texture2D>("textures\\UI\\Upgrades_tab");
+            tab = new Switcher(mSpriteBatch, texture, texture2, texture3);
+            tab.Position = new Vector2(500, 364);
+            tab.Click += tab_Click;
+            mControls.Add(tab);
+            mTabs.Add(tab);
 		}
 
 		private void CreateBlockTab()

@@ -16,13 +16,21 @@ namespace BlockWars.Gameplay
 			}
 		}
 		private static PlayerData mDefault;
+
 		const int Block1Price = 10;
 		const int Block2Price = 100;
 		const int Block3Price = 500;
         const int GunPrice = 1000;
         const int BulletAPrice = 200;
-        const int BlockDestroyPercent = 10;
+        int BlockDestroyPercent = 10;
+        int[,] UpgradesPriceAndMaxLevels = {{3, 100, 200, 300 }, 
+                                            {3, 100, 200, 300 }, 
+                                            {3, 100, 200, 300 }};
+        const int UPGRADESCOUNT = 3;
+        public int GunMagazineSize = 3;
         int ResourcesForTurn = 200;
+        int[] CurrentUpgradeLevels;
+        
         public void AddResourcesForTurn()
         {
             CurrentResources += ResourcesForTurn;
@@ -30,7 +38,7 @@ namespace BlockWars.Gameplay
 		static PlayerData()
 		{
 			mDefault = new PlayerData(null);
-			Default.CurrentResources = 1000;
+			Default.CurrentResources = 1000000;
 		}
 		private PlayerData(PlayerData playerData)
 		{
@@ -39,6 +47,7 @@ namespace BlockWars.Gameplay
 		public PlayerData()
 		{
 			CurrentResources = Default.CurrentResources;
+            CurrentUpgradeLevels = new int[UPGRADESCOUNT];
 		}
 		public int GetResources() { return CurrentResources; }
 		public bool RemoveResources(ObjectType obj)
@@ -107,6 +116,44 @@ namespace BlockWars.Gameplay
         public void AddResourcesBlockDestroy(int startHealth)
         {
             CurrentResources += startHealth * BlockDestroyPercent / 100;
+        }
+        public bool BuyUpgrade(int upgradeType)
+        {
+            if (upgradeType<0||upgradeType>=UPGRADESCOUNT)
+            {
+                throw new ArgumentException("\"upgradeType\" is not valid");
+                return false;
+            }
+            else if (CurrentUpgradeLevels[upgradeType]==UpgradesPriceAndMaxLevels[upgradeType,0])
+            {
+                return false;
+            }
+            else if (CurrentResources<UpgradesPriceAndMaxLevels[upgradeType,CurrentUpgradeLevels[upgradeType]+1])
+            {
+                return false;
+            }
+            else
+            {
+                CurrentUpgradeLevels[upgradeType]++;
+                CurrentResources -= UpgradesPriceAndMaxLevels[upgradeType, CurrentUpgradeLevels[upgradeType]];
+                switch (upgradeType)
+                {
+                    case 0:
+                        GunMagazineSize++;
+                        break;
+                    case 1:
+                        ResourcesForTurn += CurrentUpgradeLevels[upgradeType] * 50;
+                        break;
+                    case 2:
+                        BlockDestroyPercent += CurrentUpgradeLevels[upgradeType] * 2;
+                        break;
+                }
+                return true;
+            }
+        }
+        public int[] GetUpgradeLevels()
+        {
+            return CurrentUpgradeLevels;
         }
 		public enum ObjectType
 		{

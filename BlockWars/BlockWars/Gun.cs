@@ -38,8 +38,6 @@ namespace BlockWars
 
         private bool mIsActive;
 
-        public int mMagazineSize = 5;
-
         public List<int> CurrentMagazine
         {
             get;
@@ -56,10 +54,6 @@ namespace BlockWars
             mWorld = world;
             mPlayer = player;
             CurrentMagazine = new List<int>();
-            for (int i = 0; i < 3; i++)
-            {
-                AddBulletToMagazine(1);
-            }
 
             Vector2 size = new Vector2(10, 8);
             mBaseBox = new Box(world, position, size, "gun", true, player);
@@ -116,7 +110,7 @@ namespace BlockWars
 
         public bool AddBulletToMagazine(int bulletType)
         {
-            if (CurrentMagazine.Count == mMagazineSize)
+            if (CurrentMagazine.Count == mPlayer.Resources.GunMagazineSize)
             {
                 return false;
             }
