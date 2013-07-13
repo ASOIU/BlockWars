@@ -145,6 +145,11 @@ namespace BlockWars
                     {
                         if (mPlayer.CheckBorder(position.X, position.Y, mPlayer.PlayerType))
                         {
+                            if (mPlayer.Resources.RemoveResources(mBuildingObjectType))
+                            {
+                                buildingObject = mBuildingBlock;
+                                CreateBox();
+                            }
                         }
                     }
                 }
