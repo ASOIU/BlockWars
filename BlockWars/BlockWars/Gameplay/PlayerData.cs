@@ -38,7 +38,7 @@ namespace BlockWars.Gameplay
 		static PlayerData()
 		{
 			mDefault = new PlayerData(null);
-			Default.CurrentResources = 1000000;
+			Default.CurrentResources = 1000;
 		}
 		private PlayerData(PlayerData playerData)
 		{

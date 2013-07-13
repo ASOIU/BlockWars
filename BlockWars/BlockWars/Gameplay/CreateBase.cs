@@ -72,7 +72,7 @@ namespace BlockWars.Gameplay
                             {
                                 position = new Vector2(x, y);
                                 size = new Vector2(bw, bh);
-                                box = new Box(world, position, size, "block2", true, gameplay.Player2,200);
+                                box = new Box(world, position, size, "block2", true, gameplay.Player1,200);
                                 mBoxes.Add(box);
                                 x += bw;
                             }
@@ -84,7 +84,7 @@ namespace BlockWars.Gameplay
                         {
                             position = new Vector2(x, y);
                             size = new Vector2(bw, bh);
-                            box = new Box(world, position, size, "block2", true, gameplay.Player2,200);
+                            box = new Box(world, position, size, "block2", true, gameplay.Player1,200);
                             mBoxes.Add(box);
                             x += bw;
                         }
@@ -94,7 +94,7 @@ namespace BlockWars.Gameplay
                         {
                             position = new Vector2(x, y);
                             size = new Vector2(bw, bh);
-                            box = new Box(world, position, size, "block2", true, gameplay.Player2,200);
+                            box = new Box(world, position, size, "block2", true, gameplay.Player1,200);
                             mBoxes.Add(box);
                             x += bw + bw / 2f;
                         }
@@ -106,7 +106,7 @@ namespace BlockWars.Gameplay
                             {
                                 position = new Vector2(x, y);
                                 size = new Vector2(bw, bh);
-                                box = new Box(world, position, size, "block3", true, gameplay.Player2);
+                                box = new Box(world, position, size, "block3", true, gameplay.Player1);
                                 mBoxes.Add(box);
                                 x -= bw;
                             }
