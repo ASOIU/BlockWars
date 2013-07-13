@@ -32,6 +32,8 @@ namespace BlockWars
 
         public Player mPlayer;
 
+        public DateTime? DestroyTime { get; set; }
+
         public Box(World world, Vector2 position, Vector2 size, string texture, bool isStatic, Player player, float health = 100)
         {
             ObjectType = EObjectType.Box;
@@ -42,6 +44,7 @@ namespace BlockWars
             mWorld = world;
             mTexture = texture;
             mPlayer = player;
+            DestroyTime = null;
             PolygonShape polygonShape = new PolygonShape();
             polygonShape.SetAsBox(size.X / 2f, size.Y / 2f);
 

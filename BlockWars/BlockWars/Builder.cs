@@ -155,6 +155,8 @@ namespace BlockWars
 
         private bool IsLegalPosition()
         {
+            EdgeShape shape =  new EdgeShape();
+             
             bool isLegal = false;
             if (mBuildingObjectType == PlayerData.ObjectType.Gun)
             {
@@ -163,10 +165,11 @@ namespace BlockWars
             else
             {
                 isLegal = true;
-                /*List<Box> boxes = mGameObjectCollection.Boxes;
-                Shape shape1 = mBuildingBlock.mBody.GetFixtureList().GetShape();
+                List<Box> boxes = mGameObjectCollection.Boxes;
+                Body buildingBlockBody = ((Box) mBuildingBlock).mBody;
+                Shape shape1 = buildingBlockBody.GetFixtureList().GetShape();
                 Transform transform1, transform2;
-                mBuildingBlock.mBody.GetTransform(out transform1);
+                buildingBlockBody.GetTransform(out transform1);
                 for (int i = 0; i < boxes.Count; i++)
                 {
                     Body body = boxes[i].mBody;
@@ -178,7 +181,7 @@ namespace BlockWars
                         isLegal = false;
                         break;
                     }
-                }*/
+                }
             }
             return isLegal;
         }
