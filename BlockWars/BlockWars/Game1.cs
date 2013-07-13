@@ -28,7 +28,6 @@ namespace BlockWars
         private UIManager mUiManager;
         private Player mPlayer;
         private Gameplay.Gameplay mGameplay;
-        private Gameplay.CreateBase mCreateBase;
         private GameObjectCollection mGameObjectCollection;
 
         private List<Box> mImmortalBoxes;
@@ -60,8 +59,6 @@ namespace BlockWars
             mGameplay = new Gameplay.Gameplay(mCamera, mUiManager);
             mPlayer = mGameplay.Player1;
 
-            mCreateBase = new CreateBase();
-
             Vector2 pos = new Vector2(0, 30);
             Vector2 size = new Vector2(2, 2);
 
@@ -80,8 +77,11 @@ namespace BlockWars
             mGameObjectCollection.Guns.Add(gunPlayer2);
             mGameplay.Player2.Gun = gunPlayer2;
 
-            mGameObjectCollection.Boxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player1));
-            mGameObjectCollection.Boxes.AddRange(mCreateBase.CreateBuilding(mWorld, mGameplay, Gameplay.EntityCategory.Player2));
+            List<Box> baseBoxes = PlayerBaseFactory.CreateBuilding(mWorld, mGameplay, EntityCategory.Player1);
+            mGameObjectCollection.Boxes.AddRange(baseBoxes);
+
+            baseBoxes = PlayerBaseFactory.CreateBuilding(mWorld, mGameplay, EntityCategory.Player2);
+            mGameObjectCollection.Boxes.AddRange(baseBoxes);
 
             mBuilder.Activate();
             base.Initialize();

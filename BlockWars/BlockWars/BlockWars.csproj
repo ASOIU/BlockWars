@@ -123,7 +123,7 @@
     <Compile Include="EBlockType.cs" />
     <Compile Include="EObjectType.cs" />
     <Compile Include="GameObjectCollection.cs" />
-    <Compile Include="Gameplay\CreateBase.cs" />
+    <Compile Include="Gameplay\PlayerBaseFactory.cs" />
     <Compile Include="Gameplay\Gameplay.cs" />
     <Compile Include="Gameplay\EntityCategory.cs" />
     <Compile Include="Gameplay\Player.cs" />
