@@ -17,7 +17,7 @@
 			Resources = new PlayerData();
         }
 
-        public bool CheckingBorder(double x, double y, EntityCategory playerType)
+        public bool CheckBorder(double x, double y, EntityCategory playerType)
         {
             switch (playerType)
             {

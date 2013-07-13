@@ -54,7 +54,7 @@ namespace BlockWars
             mContactListener = new ContactListener();
             mWorld.ContactListener = mContactListener;
 
-            mBuilder = new Builder(mWorld, mCamera);
+            mBuilder = new Builder(mWorld, mCamera, mGameObjectCollection);
 
             mUiManager = new UIManager(spriteBatch, Content, mBuilder);
             mGameplay = new Gameplay.Gameplay(mCamera, mUiManager);
