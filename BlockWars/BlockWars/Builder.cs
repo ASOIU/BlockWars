@@ -17,7 +17,9 @@ namespace BlockWars
 
         public bool mIsActive;
 
-        private Box mBuildingBox;
+        /*private Box mBuildingBox;
+        private Gun mBuildingGun;*/
+        private AGameObject mBuildingBlock;
 
         private ButtonState mLastButtonState;
 
@@ -72,6 +74,10 @@ namespace BlockWars
                         mHealth = 300;
                         break;
                     }
+                case PlayerData.ObjectType.Gun:
+                    {
+                        break;
+                    }
                 default:
                     break;
             }
@@ -91,7 +97,14 @@ namespace BlockWars
             Vector2 size = new Vector2(6, 3);
             MouseState mouseState = Mouse.GetState();
             Vector2 position = new Vector2(mouseState.X, mouseState.Y);
-            mBuildingBox = new Box(mWorld, position, size, mTexture, true, mPlayer, mHealth);
+            mBuildingBlock = new Box(mWorld, position, size, mTexture, true, mPlayer, mHealth);
+        }
+
+        private void CreateGun()
+        {
+            MouseState mouseState = Mouse.GetState();
+            Vector2 position = new Vector2(mouseState.X, mouseState.Y);
+            mBuildingBlock = new Gun(mWorld, position, mPlayer);
         }
 
         public void Deactivate()
@@ -99,9 +112,9 @@ namespace BlockWars
             if (mIsActive)
             {
                 mIsActive = false;
-                if (mBuildingBox != null)
+                if (mBuildingBlock != null)
                 {
-                    mBuildingBox.Destroy();
+                    mBuildingBlock.Destroy();
                 }
             }
         }
@@ -122,7 +135,7 @@ namespace BlockWars
 
                 if (mPlayer.CheckBorder(position.X, position.Y, mPlayer.PlayerType))
                 {
-                    mBuildingBox.mBody.Position = position;
+                    mBuildingBlock.SetPosition(position);
                 }
 
                 if (mouseState.LeftButton == ButtonState.Pressed &&
@@ -132,11 +145,6 @@ namespace BlockWars
                     {
                         if (mPlayer.CheckBorder(position.X, position.Y, mPlayer.PlayerType))
                         {
-                            if (mPlayer.Resources.RemoveResources(mBuildingObjectType))
-                            {
-                                buildingObject = mBuildingBox;
-                                CreateBox();
-                            }
                         }
                     }
                 }
@@ -155,10 +163,10 @@ namespace BlockWars
             else
             {
                 isLegal = true;
-                List<Box> boxes = mGameObjectCollection.Boxes;
-                Shape shape1 = mBuildingBox.mBody.GetFixtureList().GetShape();
+                /*List<Box> boxes = mGameObjectCollection.Boxes;
+                Shape shape1 = mBuildingBlock.mBody.GetFixtureList().GetShape();
                 Transform transform1, transform2;
-                mBuildingBox.mBody.GetTransform(out transform1);
+                mBuildingBlock.mBody.GetTransform(out transform1);
                 for (int i = 0; i < boxes.Count; i++)
                 {
                     Body body = boxes[i].mBody;
@@ -170,7 +178,7 @@ namespace BlockWars
                         isLegal = false;
                         break;
                     }
-                }
+                }*/
             }
             return isLegal;
         }
@@ -179,7 +187,7 @@ namespace BlockWars
         {
             if (mIsActive)
             {
-                mBuildingBox.Draw(primitiveRender);
+                mBuildingBlock.Draw(primitiveRender);
             }
         }
     }

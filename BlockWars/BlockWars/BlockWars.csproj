@@ -134,6 +134,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="UI\Background.cs" />
+    <Compile Include="UI\Button.cs" />
     <Compile Include="UI\UIManager.Controls.cs" />
     <Compile Include="UI\Cursor.cs" />
     <Compile Include="UI\Switcher.cs" />

@@ -39,7 +39,7 @@ namespace BlockWars.Gameplay
         {
             for (int i = 0; i < Boxes.Count; i++)
             {
-                if (Boxes[i].mPlayer == Player1)
+                if (Boxes[i].mPlayer == Player1 && Boxes[i].Texture == "base-block")
                     p1++;
                 else
                     p2++;
