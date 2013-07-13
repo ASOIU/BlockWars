@@ -22,7 +22,6 @@ namespace BlockWars.UI
         private SpriteBatch mSpriteBatch;
         private ContentManager mContentManager;
         private SpriteFont mFont;
-        private bool mBuildMode;
         private Player mPlayer;
         private string mPlayerName;
 
@@ -34,22 +33,20 @@ namespace BlockWars.UI
             mBuilder = builder;
 
             CreateControls();
-
-            mBuildMode = true;
         }
 
         void BButton_BuildClick(object sender, EventArgs e)
         {
             Button BButton = (Button)sender;
-			mBuildMode = false;
+            mBuilder.Deactivate();
             for (int i = 0; i < mControls.Count; i++)
             {
-                    mControls[i].Visible = false;
-                    if (mPlayer.Gun != null)
-                    {
-                        mPlayer.Gun.IsActive = true;
-                    }
-                
+                mControls[i].Visible = false;
+                if (mPlayer.Gun != null)
+                {
+                    mPlayer.Gun.IsActive = true;
+                }
+
             }
         }
 
@@ -116,19 +113,19 @@ namespace BlockWars.UI
             mPlayer = player;
             mPlayerName = "Игрок: " + mPlayer.Name;
             mBuilder.SetActivePlayer(player);
-			mBuildMode = true;
-			for (int i = 0; i < mControls.Count; i++)
-			{
-				mControls[i].Visible = true;
-			}
-			for (int i = 0; i < TAB_COUNT; i++)
-			{
-				for (int j = 0; j < mButtonsPerTab[i].Count; j++)
-				{
-					mButtonsPerTab[i][j].Visible = false;
-				}
-			}
-			SetTabActive(0);
+            mBuilder.Activate();
+            for (int i = 0; i < mControls.Count; i++)
+            {
+                mControls[i].Visible = true;
+            }
+            for (int i = 0; i < TAB_COUNT; i++)
+            {
+                for (int j = 0; j < mButtonsPerTab[i].Count; j++)
+                {
+                    mButtonsPerTab[i][j].Visible = false;
+                }
+            }
+            SetTabActive(0);
         }
 
         public void Update(GameTime gameTime)
@@ -139,49 +136,17 @@ namespace BlockWars.UI
                 mControls[i].Update(gameTime);
             }
 
-            if (!mBuildMode)
+            mCursor.Visible = !mBuilder.IsActive;
+            mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
+            if (mBuilder.IsActive)
             {
                 for (int i = 0; i < mControls.Count; i++)
                 {
-                    if (mControls[i] == mCursor)
+                    if (mControls[i].IsActive)
                     {
                         mCursor.Visible = true;
-                        mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < mControls.Count; i++)
-                {
-                    if (mControls[i].IsActive == true)
-                    {
-                        for (int j = 0; j < mControls.Count; j++)
-                        {
-                            if (mControls[j] == mCursor)
-                            {
-                                mCursor.Visible = true;
-                                mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
-                            }
-                        }
-                        mBuilder.Deactivate();
                         break;
                     }
-                    else
-                    {
-                        for (int j = 0; j < mControls.Count; j++)
-                        {
-                            if (mControls[j] == mCursor)
-                            {
-                                mCursor.Visible = false;
-                            }
-                        }
-                        if (mBuildMode == true)
-                        {
-                            mBuilder.Activate();
-                        }
-                    }
-
                 }
             }
         }
@@ -198,88 +163,88 @@ namespace BlockWars.UI
 
             pos = new Vector2(0, 21);
             mSpriteBatch.DrawString(mFont, mPlayerName, pos, Color.Black);
-            
-			
+
+
             string info = "Нажмите 'ENTER' для передачи хода";
-            pos = new Vector2(180,0);
+            pos = new Vector2(180, 0);
             mSpriteBatch.DrawString(mFont, info, pos, Color.DarkRed);
 
-			string cage = "Обойма: [";
-			for (int i = 0; i < mPlayer.Gun.CurrentMagazine.Count; i++)
-			{
-				string bullet = "";
-				switch (mPlayer.Gun.CurrentMagazine[i])
-				{
-					case 1:
-						bullet = "О";
-						break;
-					case 2:
-						bullet = "Б";
-						break;
-					default:
-						bullet = "Н";
-						break;
-				}
-				if (i < mPlayer.Resources.GunMagazineSize-1)
-				{
-					cage += bullet + "|";
-				}
-				else
-				{
-					cage += bullet;
-				}
-				
-			}
-			if (mPlayer.Gun.CurrentMagazine.Count<mPlayer.Resources.GunMagazineSize)
-			{
-				for (int i = 0; i < mPlayer.Resources.GunMagazineSize-mPlayer.Gun.CurrentMagazine.Count; i++)
-				{
-					if (i < mPlayer.Resources.GunMagazineSize-mPlayer.Gun.CurrentMagazine.Count-1)
-				{
-					cage += "-" + "|";
-				}
-				else
-				{
-					cage += "-";
-				}
-				}
-			}
-			cage += "]";
-			
+            string cage = "Обойма: [";
+            for (int i = 0; i < mPlayer.Gun.CurrentMagazine.Count; i++)
+            {
+                string bullet = "";
+                switch (mPlayer.Gun.CurrentMagazine[i])
+                {
+                    case 1:
+                        bullet = "О";
+                        break;
+                    case 2:
+                        bullet = "Б";
+                        break;
+                    default:
+                        bullet = "Н";
+                        break;
+                }
+                if (i < mPlayer.Resources.GunMagazineSize - 1)
+                {
+                    cage += bullet + "|";
+                }
+                else
+                {
+                    cage += bullet;
+                }
+
+            }
+            if (mPlayer.Gun.CurrentMagazine.Count < mPlayer.Resources.GunMagazineSize)
+            {
+                for (int i = 0; i < mPlayer.Resources.GunMagazineSize - mPlayer.Gun.CurrentMagazine.Count; i++)
+                {
+                    if (i < mPlayer.Resources.GunMagazineSize - mPlayer.Gun.CurrentMagazine.Count - 1)
+                    {
+                        cage += "-" + "|";
+                    }
+                    else
+                    {
+                        cage += "-";
+                    }
+                }
+            }
+            cage += "]";
+
             pos = new Vector2(0, 41);
             mSpriteBatch.DrawString(mFont, cage, pos, Color.Black);
 
             int[] Upgrades = mPlayer.Resources.GetUpgradeLevels();
             for (int i = 0; i < Upgrades.Length; i++)
             {
-                pos = new Vector2(0, 61+i*20);
-                mSpriteBatch.DrawString(mFont, string.Format("Upgrade{0} level: {1}",i+1,Upgrades[i]), pos, Color.Black);
+                pos = new Vector2(0, 61 + i * 20);
+                mSpriteBatch.DrawString(mFont, string.Format("Upgrade{0} level: {1}", i + 1, Upgrades[i]), pos, Color.Black);
             }
         }
 
         public void GameOver(Player player)
         {
-            mBuilder.mIsActive = false;
+            mBuilder.Deactivate();
             string congrats = "Игра окончена\n" + player.Name + "ПОБЕДИЛ!";
             Vector2 pos = new Vector2(200, 100);
             mSpriteBatch.DrawString(mFont, congrats, pos, Color.Red);
         }
 
-		private void bullet_Click(object sender, EventArgs e)
-		{
-			mPlayer.Gun.AddBulletToMagazine(1);
-		}
+        private void bullet_Click(object sender, EventArgs e)
+        {
+            mPlayer.Gun.AddBulletToMagazine(1);
+        }
 
-		private void bulletA_Click(object sender, EventArgs e)
-		{
-			if(mPlayer.Resources.CheckResourceAvaliabe(PlayerData.ObjectType.BulletA))
-			{
-				if (mPlayer.Gun.AddBulletToMagazine(2))
-				{
-					mPlayer.Resources.RemoveResources(PlayerData.ObjectType.BulletA);
-				}
-			}
-		}
+        private void bulletA_Click(object sender, EventArgs e)
+        {
+            if (mPlayer.Resources.CheckResourceAvaliabe(PlayerData.ObjectType.BulletA))
+            {
+                if (mPlayer.Gun.AddBulletToMagazine(2))
+                {
+                    mPlayer.Resources.RemoveResources(PlayerData.ObjectType.BulletA);
+                }
+            }
+        }
 
         private void Upgrade_Click(object sender, EventArgs e)
         {

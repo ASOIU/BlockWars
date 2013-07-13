@@ -15,7 +15,7 @@ namespace BlockWars
     {
         private World mWorld;
 
-        public bool mIsActive;
+        public bool IsActive { get; private set; }
 
         /*private Box mBuildingBox;
         private Gun mBuildingGun;*/
@@ -41,7 +41,7 @@ namespace BlockWars
             mCamera = camera;
             mGameObjectCollection = gameObjectCollection;
 
-            mIsActive = false;
+            IsActive = false;
             mTexture = "block3";
             SetBuildingObjectType(PlayerData.ObjectType.Block1);
         }
@@ -85,9 +85,9 @@ namespace BlockWars
 
         public void Activate()
         {
-            if (!mIsActive)
+            if (!IsActive)
             {
-                mIsActive = true;
+                IsActive = true;
                 CreateBox();
             }
         }
@@ -109,9 +109,9 @@ namespace BlockWars
 
         public void Deactivate()
         {
-            if (mIsActive)
+            if (IsActive)
             {
-                mIsActive = false;
+                IsActive = false;
                 if (mBuildingBlock != null)
                 {
                     mBuildingBlock.Destroy();
@@ -122,7 +122,7 @@ namespace BlockWars
         public object Update(GameTime gameTime)
         {
             object buildingObject = null;
-            if (mIsActive)
+            if (IsActive)
             {
                 MouseState mouseState = Mouse.GetState();
                 Vector2 position = new Vector2(mouseState.X, mouseState.Y);
@@ -160,8 +160,8 @@ namespace BlockWars
 
         private bool IsLegalPosition()
         {
-            EdgeShape shape =  new EdgeShape();
-             
+            EdgeShape shape = new EdgeShape();
+
             bool isLegal = false;
             if (mBuildingObjectType == PlayerData.ObjectType.Gun)
             {
@@ -171,7 +171,7 @@ namespace BlockWars
             {
                 isLegal = true;
                 List<Box> boxes = mGameObjectCollection.Boxes;
-                Body buildingBlockBody = ((Box) mBuildingBlock).mBody;
+                Body buildingBlockBody = ((Box)mBuildingBlock).mBody;
                 Shape shape1 = buildingBlockBody.GetFixtureList().GetShape();
                 Transform transform1, transform2;
                 buildingBlockBody.GetTransform(out transform1);
@@ -193,7 +193,7 @@ namespace BlockWars
 
         public void Draw(PrimitiveRender primitiveRender, SpriteBatch spriteBatch)
         {
-            if (mIsActive)
+            if (IsActive)
             {
                 mBuildingBlock.Draw(primitiveRender);
             }
