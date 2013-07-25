@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+
+namespace BlockWars
+{
+	class Terrain:AGameObject
+	{
+		float[] mTerrainBaseVertexs;
+		Vector2[] mTerrainDrawVertexs;
+		int mScale = 80;
+		public Terrain()
+		{
+			Generate();
+			GenerateDrawVertexs();
+		}
+
+		private void GenerateDrawVertexs()
+		{
+			mTerrainDrawVertexs = new Vector2[70];
+			for (int i = 1; i < 5; i++)
+			{
+				for (int j = 0; j < 10; j++)
+				{
+					mTerrainDrawVertexs[i * 10 + j] = new Vector2((i-1) * 10*mScale + j*mScale, CubicInterpolate(mTerrainBaseVertexs[i-1], mTerrainBaseVertexs[i], mTerrainBaseVertexs[i + 1], mTerrainBaseVertexs[i + 2], j / 10f));
+				}
+			}
+		}
+
+		private void Generate()
+		{
+			Random r = new Random();
+			mTerrainBaseVertexs = new float[7];
+			for (int i = 0; i < 7; i++)
+			{
+				mTerrainBaseVertexs[i] = r.Next(0, 10000) / 10f;
+			}
+		}
+
+		float CubicInterpolate(double y0, double y1,double y2, double y3,double mu)
+		{
+			double a0, a1, a2, a3, mu2;
+
+			mu2 = mu * mu;
+			a0 = y3 - y2 - y0 + y1;
+			a1 = y0 - y1 - a0;
+			a2 = y2 - y0;
+			a3 = y1;
+
+			return (float)(a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
+		}
+		public override void Draw(PrimitiveRender primitiveRender)
+		{
+			Vector2[] Vertexs = new Vector2[40];
+			Array.Copy(mTerrainDrawVertexs, 10, Vertexs, 0, 40);
+			primitiveRender.DrawLineList(Vertexs, 40, Color.White);
+		}
+		public override void Destroy()
+		{
+			throw new NotImplementedException();
+		}
+		public override Vector2 GetPosition()
+		{
+			throw new NotImplementedException();
+		}
+		public override void SetPosition(Vector2 position)
+		{
+			throw new NotImplementedException();
+		}
+	}
+}

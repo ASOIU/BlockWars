@@ -29,6 +29,7 @@ namespace BlockWars
         private Player mPlayer;
         private Gameplay.Gameplay mGameplay;
         private GameObjectCollection mGameObjectCollection;
+		Terrain mTerrain;
 
         private List<Box> mImmortalBoxes;
 
@@ -52,6 +53,8 @@ namespace BlockWars
             mWorld = new World(gravity, true);
             mContactListener = new ContactListener();
             mWorld.ContactListener = mContactListener;
+
+			mTerrain = new Terrain();
 
             mBuilder = new Builder(mWorld, mCamera, mGameObjectCollection);
 
@@ -191,7 +194,7 @@ namespace BlockWars
 
             mPrimitiveRender.BeginDraw();
             //spriteBatch.Begin();
-
+			mTerrain.Draw(mPrimitiveRender);
             List<Box> boxes = mGameObjectCollection.Boxes;
             for (int i = 0; i < boxes.Count; i++)
             {
