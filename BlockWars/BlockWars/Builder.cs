@@ -45,7 +45,7 @@ namespace BlockWars
             mTexture = "block3";
         }
 
-        public void SetActivePlayer(Player player)
+        public void SetCurrentPlayer(Player player)
         {
             mPlayer = player;
         }

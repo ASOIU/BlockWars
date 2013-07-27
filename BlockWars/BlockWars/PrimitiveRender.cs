@@ -32,8 +32,8 @@ namespace BlockWars
             mVertecesCount = 0;
             mVerteces = new VertexPositionColor[initalCapacity];
             mGraphicsDevice = graphicsDevice;
-            mBufferVerteces = new VertexPositionColor[64];
-            mPointBuffer = new Vector2[64];
+			mBufferVerteces = new VertexPositionColor[initalCapacity];
+			mPointBuffer = new Vector2[initalCapacity];
 
             mSpriteBatch = spriteBatch;
             mTextures = new Dictionary<string, Texture2D>();
@@ -107,6 +107,23 @@ namespace BlockWars
 
             mVertecesCount += count * 2;
         }
+		public void DrawLineList(Vector2[] points, int count, Color color)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				mBufferVerteces[i].Position = new Vector3(points[i], 0);
+				mBufferVerteces[i].Color = color;
+			}
+
+			int index = mVertecesCount;
+			for (int i = 0; i < count-1; i++)
+			{
+				mVerteces[index + i * 2] = mBufferVerteces[i];
+				mVerteces[index + i * 2 + 1] = mBufferVerteces[i + 1];
+			}
+
+			mVertecesCount += count * 2;
+		}
 
         public void BeginDraw()
         {
