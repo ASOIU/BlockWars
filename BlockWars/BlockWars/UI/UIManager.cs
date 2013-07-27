@@ -52,22 +52,19 @@ namespace BlockWars.UI
 
         private void gunSwitch_Click(object sender, EventArgs e)
         {
-            Switcher gun = (Switcher)sender;
-            if (gun.IsSwitchedOn)
+            Switcher gunSwitcher = (Switcher)sender;
+            if (gunSwitcher.Enable)
             {
+                gunSwitcher.IsSwitchedOn = true;
                 List<UIControl> gunButtons = mButtonsPerTab[1];
                 for (int i = 0; i < gunButtons.Count; i++)
                 {
-                    if (gunButtons[i] != gun)
+                    if (gunButtons[i] != gunSwitcher)
                     {
                         ((Switcher)gunButtons[i]).IsSwitchedOn = false;
-                        mBuilder.SetBuildingObjectType((PlayerData.ObjectType)gunButtons.IndexOf(gun));
                     }
                 }
-            }
-            else
-            {
-                gun.IsSwitchedOn = true;
+                mBuilder.SetBuildingObjectType(PlayerData.ObjectType.Gun);
             }
         }
 

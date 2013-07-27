@@ -111,12 +111,8 @@ namespace BlockWars
 
             List<Box> newBoxes = ProcessCollisions();
             mGameObjectCollection.Boxes.AddRange(newBoxes);
+            mBuilder.Update(gameTime);
 
-            object obj = mBuilder.Update(gameTime);
-            if (obj is Box)
-            {
-                mGameObjectCollection.Boxes.Add((Box)obj);
-            }
             mCamera.Update(gameTime);
 
             mUiManager.Update(gameTime);
