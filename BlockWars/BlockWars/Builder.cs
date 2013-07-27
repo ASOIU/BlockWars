@@ -177,6 +177,7 @@ namespace BlockWars
                                 if (buildingObject is Gun)
                                 {
                                     mGameObjectCollection.Guns.Add((Gun)buildingObject);
+                                    mPlayer.Guns.Add((Gun)buildingObject);
                                 }
                                 CreateGameObject();
                             }

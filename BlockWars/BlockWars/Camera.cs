@@ -26,7 +26,7 @@ namespace BlockWars
         {
             mViewport = viewport;
             mBasicEffect = basicEffect;
-            mZoom = 6;
+            mZoom = 1;
             mPosition = new Vector2(0, 0);
             UpdateProjection();
         }

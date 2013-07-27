@@ -14,6 +14,8 @@ namespace BlockWars.UI
     {
         private const int TAB_COUNT = 5;
 
+        public event EventHandler<GunEventArgs> GunChanged;
+
         private List<UIControl> mControls;
         private List<UIControl>[] mButtonsPerTab;
         private List<Switcher> mTabs;
@@ -25,6 +27,8 @@ namespace BlockWars.UI
         private Player mPlayer;
         private string mPlayerName;
         private bool mBuildModeActive;
+        private Gun mActiveGun;
+        private KeyboardState mKeyboardState;
 
         public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder)
         {
@@ -45,9 +49,9 @@ namespace BlockWars.UI
                 mControls[i].Visible = false;
             }
 
-            if (mPlayer.Gun != null)
+            if (mActiveGun != null)
             {
-                mPlayer.Gun.IsActive = true;
+                mActiveGun.IsActive = true;
             }
         }
 
@@ -124,10 +128,28 @@ namespace BlockWars.UI
                 }
             }
             SetTabActive(0);
+            if(player.Guns.Count>0)
+                mActiveGun = player.Guns[0];
         }
 
         public void Update(GameTime gameTime)
         {
+            mKeyboardState = Keyboard.GetState();
+            if(mKeyboardState.IsKeyDown(Keys.Tab))
+            {
+                if (mActiveGun != null)
+                {
+                    int gunIndex = mPlayer.Guns.IndexOf(mActiveGun);
+                    gunIndex = (gunIndex + 1) % mPlayer.Guns.Count;
+                    mActiveGun = mPlayer.Guns[gunIndex];
+
+                    if (GunChanged != null)
+                    {
+                        GunChanged(this, new GunEventArgs(mActiveGun));
+                    }
+                }
+            }
+
             MouseState curMouseState = Mouse.GetState();
             for (int i = 0; i < mControls.Count; i++)
             {
@@ -186,10 +208,10 @@ namespace BlockWars.UI
             mSpriteBatch.DrawString(mFont, info, pos, Color.DarkRed);
 
             string cage = "Обойма: [";
-            for (int i = 0; i < mPlayer.Gun.CurrentMagazine.Count; i++)
+            for (int i = 0; i < mActiveGun.CurrentMagazine.Count; i++)
             {
                 string bullet = "";
-                switch (mPlayer.Gun.CurrentMagazine[i])
+                switch (mActiveGun.CurrentMagazine[i])
                 {
                     case 1:
                         bullet = "О";
@@ -211,11 +233,11 @@ namespace BlockWars.UI
                 }
 
             }
-            if (mPlayer.Gun.CurrentMagazine.Count < mPlayer.Resources.GunMagazineSize)
+            if (mActiveGun.CurrentMagazine.Count < mPlayer.Resources.GunMagazineSize)
             {
-                for (int i = 0; i < mPlayer.Resources.GunMagazineSize - mPlayer.Gun.CurrentMagazine.Count; i++)
+                for (int i = 0; i < mPlayer.Resources.GunMagazineSize - mActiveGun.CurrentMagazine.Count; i++)
                 {
-                    if (i < mPlayer.Resources.GunMagazineSize - mPlayer.Gun.CurrentMagazine.Count - 1)
+                    if (i < mPlayer.Resources.GunMagazineSize - mActiveGun.CurrentMagazine.Count - 1)
                     {
                         cage += "-" + "|";
                     }
@@ -248,14 +270,14 @@ namespace BlockWars.UI
 
         private void bullet_Click(object sender, EventArgs e)
         {
-            mPlayer.Gun.AddBulletToMagazine(1);
+            mActiveGun.AddBulletToMagazine(1);
         }
 
         private void bulletA_Click(object sender, EventArgs e)
         {
             if (mPlayer.Resources.CheckResourceAvaliabe(PlayerData.ObjectType.BulletA))
             {
-                if (mPlayer.Gun.AddBulletToMagazine(2))
+                if (mActiveGun.AddBulletToMagazine(2))
                 {
                     mPlayer.Resources.RemoveResources(PlayerData.ObjectType.BulletA);
                 }

@@ -73,12 +73,12 @@ namespace BlockWars
             pos = new Vector2(-150, -7);
             Gun gunPlayer1 = new Gun(mWorld, pos, mPlayer);
             mGameObjectCollection.Guns.Add(gunPlayer1);
-            mPlayer.Gun = gunPlayer1;
+            mPlayer.Guns.Add(gunPlayer1);
 
             pos = new Vector2(140, -7);
             Gun gunPlayer2 = new Gun(mWorld, pos, mGameplay.Player2);
             mGameObjectCollection.Guns.Add(gunPlayer2);
-            mGameplay.Player2.Gun = gunPlayer2;
+            mGameplay.Player2.Guns.Add(gunPlayer2);
 
             List<Box> baseBoxes = PlayerBaseFactory.CreateBuilding(mWorld, mGameplay, EntityCategory.Player1);
             mGameObjectCollection.Boxes.AddRange(baseBoxes);
@@ -86,6 +86,7 @@ namespace BlockWars
             baseBoxes = PlayerBaseFactory.CreateBuilding(mWorld, mGameplay, EntityCategory.Player2);
             mGameObjectCollection.Boxes.AddRange(baseBoxes);
 
+            mGameplay.StartGame();
             mBuilder.Activate();
             base.Initialize();
         }
