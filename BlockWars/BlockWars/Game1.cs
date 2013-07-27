@@ -126,7 +126,7 @@ namespace BlockWars
 
             mGameplay.Update(gameTime);
 
-            /*mUiManager.SetActivePlayer(mPlayer);*/
+            /*mUiManager.SetCurrentPlayer(mPlayer);*/
 
             base.Update(gameTime);
         }

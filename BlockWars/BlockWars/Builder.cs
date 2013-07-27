@@ -46,7 +46,7 @@ namespace BlockWars
             SetBuildingObjectType(PlayerData.ObjectType.Block1);
         }
 
-        public void SetActivePlayer(Player player)
+        public void SetCurrentPlayer(Player player)
         {
             mPlayer = player;
         }
