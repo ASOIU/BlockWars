@@ -24,6 +24,7 @@ namespace BlockWars.UI
         private SpriteFont mFont;
         private Player mPlayer;
         private string mPlayerName;
+        private bool mBuildModeActive;
 
         public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder)
         {
@@ -31,22 +32,22 @@ namespace BlockWars.UI
             mSpriteBatch = spriteBatch;
             mContentManager = contentManager;
             mBuilder = builder;
+            mBuildModeActive = false;
 
             CreateControls();
         }
 
-        void BButton_BuildClick(object sender, EventArgs e)
+        private void BButton_BuildClick(object sender, EventArgs e)
         {
-            Button BButton = (Button)sender;
-            mBuilder.Deactivate();
+            mBuildModeActive = false;
             for (int i = 0; i < mControls.Count; i++)
             {
                 mControls[i].Visible = false;
-                if (mPlayer.Gun != null)
-                {
-                    mPlayer.Gun.IsActive = true;
-                }
+            }
 
+            if (mPlayer.Gun != null)
+            {
+                mPlayer.Gun.IsActive = true;
             }
         }
 
@@ -112,8 +113,8 @@ namespace BlockWars.UI
         {
             mPlayer = player;
             mPlayerName = "Игрок: " + mPlayer.Name;
-            mBuilder.SetActivePlayer(player);
-            mBuilder.Activate();
+            mBuilder.SetCurrentPlayer(player);
+            mBuildModeActive = true;
             for (int i = 0; i < mControls.Count; i++)
             {
                 mControls[i].Visible = true;
@@ -138,15 +139,33 @@ namespace BlockWars.UI
 
             mCursor.Visible = !mBuilder.IsActive;
             mCursor.Position = new Vector2(curMouseState.X, curMouseState.Y);
-            if (mBuilder.IsActive)
+            bool isAnyControlActive = false;
+            if (mBuildModeActive)
             {
                 for (int i = 0; i < mControls.Count; i++)
                 {
                     if (mControls[i].IsActive)
                     {
-                        mCursor.Visible = true;
+                        isAnyControlActive = true;
                         break;
                     }
+                }
+                mCursor.Visible = isAnyControlActive;
+
+                if (isAnyControlActive)
+                {
+                    mBuilder.Deactivate();
+                }
+                else
+                {
+                    mBuilder.Activate();
+                }
+            }
+            else
+            {
+                if (mBuilder.IsActive)
+                {
+                    mBuilder.Deactivate();
                 }
             }
         }
