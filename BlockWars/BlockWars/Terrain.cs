@@ -34,7 +34,7 @@ namespace BlockWars
 			}
             for (int i = 0; i < 70; i++)
             {
-                mTerrainDrawVertexs[i].X -= 500;
+                mTerrainDrawVertexs[i].X -= 487.5f;
                 mTerrainDrawVertexs[i].Y -= 50;
             }
             for (int i = 10; i < 49; i++)
