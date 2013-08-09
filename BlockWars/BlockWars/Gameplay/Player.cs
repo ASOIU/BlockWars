@@ -1,10 +1,13 @@
-﻿namespace BlockWars.Gameplay
+﻿using System.Collections.Generic;
+namespace BlockWars.Gameplay
 {
     class Player
     {
         public PlayerData Resources { get; set; }
 
-        public Gun Gun { get; set; }
+        //public Gun Gun { get; set; }
+
+        public List<Gun> Guns { get; private set; }
         
         public string Name { get; set; }
         
@@ -15,6 +18,7 @@
             Name = name;
             PlayerType = playerType;
 			Resources = new PlayerData();
+            Guns = new List<Gun>();
         }
 
         public bool CheckBorder(double x, double y, EntityCategory playerType)

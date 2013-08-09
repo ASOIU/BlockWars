@@ -154,11 +154,6 @@ namespace BlockWars
             {
                 mShotDone = false;
             }
-
-            if (CurrentMagazine.Count == 0)
-            {
-                mIsActive = false;
-            }
             mBarrelBox.mBody.SetTransform(pos, angle);
             return bullet;
         }

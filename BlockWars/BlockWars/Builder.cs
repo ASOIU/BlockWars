@@ -43,18 +43,17 @@ namespace BlockWars
 
             IsActive = false;
             mTexture = "block3";
-            SetBuildingObjectType(PlayerData.ObjectType.Block1);
         }
 
-        public void SetActivePlayer(Player player)
+        public void SetCurrentPlayer(Player player)
         {
             mPlayer = player;
         }
 
-        public void SetBuildingObjectType(PlayerData.ObjectType blockType)
+        public void SetBuildingObjectType(PlayerData.ObjectType objectType)
         {
-            mBuildingObjectType = blockType;
-            switch (blockType)
+            mBuildingObjectType = objectType;
+            switch (objectType)
             {
                 case PlayerData.ObjectType.Block1:
                     {
@@ -76,11 +75,13 @@ namespace BlockWars
                     }
                 case PlayerData.ObjectType.Gun:
                     {
+                        mTexture = "gun";
                         break;
                     }
                 default:
                     break;
             }
+            CreateGameObject();
         }
 
         public void Activate()
@@ -88,13 +89,34 @@ namespace BlockWars
             if (!IsActive)
             {
                 IsActive = true;
-                CreateBox();
+                CreateGameObject();
+            }
+        }
+
+        private void CreateGameObject()
+        {
+            switch (mBuildingObjectType)
+            {
+                case PlayerData.ObjectType.Block1:
+                    CreateBox();
+                    break;
+                case PlayerData.ObjectType.Block2:
+                    CreateBox();
+                    break;
+                case PlayerData.ObjectType.Block3:
+                    CreateBox();
+                    break;
+                case PlayerData.ObjectType.Gun:
+                    CreateGun();
+                    break;
+                default:
+                    break;
             }
         }
 
         private void CreateBox()
         {
-            Vector2 size = new Vector2(6, 3);
+            Vector2 size = new Vector2(5.9f, 2.9f);
             MouseState mouseState = Mouse.GetState();
             Vector2 position = new Vector2(mouseState.X, mouseState.Y);
             mBuildingBlock = new Box(mWorld, position, size, mTexture, true, mPlayer, mHealth);
@@ -119,7 +141,7 @@ namespace BlockWars
             }
         }
 
-        public object Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             object buildingObject = null;
             if (IsActive)
@@ -148,14 +170,23 @@ namespace BlockWars
                             if (mPlayer.Resources.RemoveResources(mBuildingObjectType))
                             {
                                 buildingObject = mBuildingBlock;
-                                CreateBox();
+                                if (buildingObject is Box)
+                                {
+                                    mGameObjectCollection.Boxes.Add((Box)buildingObject);
+                                }
+                                if (buildingObject is Gun)
+                                {
+                                    mGameObjectCollection.Guns.Add((Gun)buildingObject);
+                                    mPlayer.Guns.Add((Gun)buildingObject);
+                                }
+                                CreateGameObject();
                             }
                         }
                     }
                 }
                 mLastButtonState = mouseState.LeftButton;
             }
-            return buildingObject;
+            //return buildingObject;
         }
 
         private bool IsLegalPosition()
