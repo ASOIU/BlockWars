@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Box2D.XNA;
 
 namespace BlockWars
 {
@@ -11,8 +12,12 @@ namespace BlockWars
 		float[] mTerrainBaseVertexs;
 		Vector2[] mTerrainDrawVertexs;
 		int mScale = 25;
-		public Terrain()
+        BodyDef mBodyDef;
+        Body mBody;
+		public Terrain(World world)
 		{
+            mBodyDef = new BodyDef();
+            mBody = world.CreateBody(mBodyDef);
 			Generate();
 			GenerateDrawVertexs();
 		}
@@ -31,6 +36,12 @@ namespace BlockWars
             {
                 mTerrainDrawVertexs[i].X -= 500;
                 mTerrainDrawVertexs[i].Y -= 50;
+            }
+            for (int i = 10; i < 49; i++)
+            {
+                PolygonShape shape = new PolygonShape();
+				shape.SetAsEdge(mTerrainDrawVertexs[i], mTerrainDrawVertexs[i+1]);
+				mBody.CreateFixture(shape, 0.0f);
             }
 		}
 

@@ -54,7 +54,7 @@ namespace BlockWars
             mContactListener = new ContactListener();
             mWorld.ContactListener = mContactListener;
 
-			mTerrain = new Terrain();
+			mTerrain = new Terrain(mWorld);
 
             mBuilder = new Builder(mWorld, mCamera, mGameObjectCollection);
 
@@ -64,11 +64,6 @@ namespace BlockWars
 
             Vector2 pos = new Vector2(0, 30);
             Vector2 size = new Vector2(2, 2);
-
-            pos = new Vector2(0, -20);
-            size = new Vector2(10000, 1);
-            Box groundBox = new Box(mWorld, pos, size, "block", true, mPlayer);
-            mImmortalBoxes.Add(groundBox);
 
             pos = new Vector2(-150, -7);
             Gun gunPlayer1 = new Gun(mWorld, pos, mPlayer);
