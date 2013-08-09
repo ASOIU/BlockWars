@@ -10,7 +10,7 @@ namespace BlockWars
 	{
 		float[] mTerrainBaseVertexs;
 		Vector2[] mTerrainDrawVertexs;
-		int mScale = 80;
+		int mScale = 25;
 		public Terrain()
 		{
 			Generate();
@@ -27,6 +27,11 @@ namespace BlockWars
 					mTerrainDrawVertexs[i * 10 + j] = new Vector2((i-1) * 10*mScale + j*mScale, CubicInterpolate(mTerrainBaseVertexs[i-1], mTerrainBaseVertexs[i], mTerrainBaseVertexs[i + 1], mTerrainBaseVertexs[i + 2], j / 10f));
 				}
 			}
+            for (int i = 0; i < 70; i++)
+            {
+                mTerrainDrawVertexs[i].X -= 500;
+                mTerrainDrawVertexs[i].Y -= 50;
+            }
 		}
 
 		private void Generate()
@@ -35,7 +40,7 @@ namespace BlockWars
 			mTerrainBaseVertexs = new float[7];
 			for (int i = 0; i < 7; i++)
 			{
-				mTerrainBaseVertexs[i] = r.Next(0, 10000) / 10f;
+				mTerrainBaseVertexs[i] = r.Next(0, 800) / 10f;
 			}
 		}
 
@@ -53,9 +58,13 @@ namespace BlockWars
 		}
 		public override void Draw(PrimitiveRender primitiveRender)
 		{
-			Vector2[] Vertexs = new Vector2[40];
+			Vector2[] Vertexs = new Vector2[43];
 			Array.Copy(mTerrainDrawVertexs, 10, Vertexs, 0, 40);
-			primitiveRender.DrawLineList(Vertexs, 40, Color.White);
+            float y = -200;
+            Vertexs[40] = new Vector2(Vertexs[39].X, y);
+            Vertexs[41] = new Vector2(Vertexs[0].X, y);
+            Vertexs[42] = Vertexs[0];
+			primitiveRender.DrawLineList(Vertexs, 43, Color.White);
 		}
 		public override void Destroy()
 		{
