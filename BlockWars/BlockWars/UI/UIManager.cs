@@ -29,6 +29,7 @@ namespace BlockWars.UI
         private bool mBuildModeActive;
         private Gun mActiveGun;
         private KeyboardState mKeyboardState;
+        public bool mCameraState;
 
         public UIManager(SpriteBatch spriteBatch, ContentManager contentManager, Builder builder)
         {
@@ -135,9 +136,9 @@ namespace BlockWars.UI
         public void Update(GameTime gameTime)
         {
             mKeyboardState = Keyboard.GetState();
-            if(mKeyboardState.IsKeyDown(Keys.Tab))
+            if (mKeyboardState.IsKeyDown(Keys.Tab))
             {
-                if (mActiveGun != null)
+                if (mActiveGun != null && !mCameraState)
                 {
                     int gunIndex = mPlayer.Guns.IndexOf(mActiveGun);
                     gunIndex = (gunIndex + 1) % mPlayer.Guns.Count;
@@ -148,6 +149,10 @@ namespace BlockWars.UI
                         GunChanged(this, new GunEventArgs(mActiveGun));
                     }
                 }
+            }
+            else
+            {
+                mCameraState = false;
             }
 
             MouseState curMouseState = Mouse.GetState();

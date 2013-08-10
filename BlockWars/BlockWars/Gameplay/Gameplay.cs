@@ -120,6 +120,7 @@ namespace BlockWars.Gameplay
         {
             Vector2 pos = gun.mPosition;
             mCamera.SetPosition(pos);
+            mUIManager.mCameraState = true;
         }
     }
 }
