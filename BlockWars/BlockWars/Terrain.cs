@@ -9,15 +9,17 @@ namespace BlockWars
 {
     class Terrain : AGameObject
     {
+        World mWorld;
         float[] mTerrainBaseVertexs;
         Vector2[] mTerrainDrawVertexs;
         int mScale = 25;
-        int mCountBaseVertexs = 100; //-3
+        int mCountBaseVertexs = 7; //-3
         int mAmplitude = 800;
         BodyDef mBodyDef;
         Body mBody;
         public Terrain(World world)
         {
+            mWorld = world;
             mBodyDef = new BodyDef();
             mBody = world.CreateBody(mBodyDef);
             Generate();
@@ -88,17 +90,32 @@ namespace BlockWars
             int count = (mCountBaseVertexs - 3) * 10 + 3;
             primitiveRender.DrawLineList(mTerrainDrawVertexs, count, Color.White);
         }
+
+        public float GetHeight(float x)
+        {
+            for (int i = 0; i < (mCountBaseVertexs - 3) * 10-1; i++)
+            {
+                if (x>mTerrainDrawVertexs[i].X&&x<mTerrainDrawVertexs[i+1].X)
+                {
+                    float c = x - mTerrainDrawVertexs[i].X;
+                    c *= 0.04f;
+                    return Vector2.Lerp(mTerrainDrawVertexs[i], mTerrainDrawVertexs[i + 1], c).Y;
+                }
+            }
+            throw new ArgumentException();
+        }
+
         public override void Destroy()
         {
-            throw new NotImplementedException();
+            mWorld.DestroyBody(mBody);
         }
         public override Vector2 GetPosition()
         {
-            throw new NotImplementedException();
+            return Vector2.Zero;
         }
         public override void SetPosition(Vector2 position)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
     }
 }
